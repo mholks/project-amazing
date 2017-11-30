@@ -1,0 +1,289 @@
+import processing.core.*;
+import java.util.concurrent.ThreadLocalRandom;
+import controlP5.*;
+
+public class UsingProcessing extends PApplet {
+
+	boolean goalReached = false; // goal of the current level reached
+
+	int size = 5; // size of maze in cells
+
+	int cellSize = 450 / size; // size of one cell
+
+	MazeCreator creat = new RecursiveBacktracker(); // chosen maze creation
+													// strategy
+
+	Player p = new Player(this, cellSize); // initialize player
+
+	Maze maze = new Maze(size, size, this, creat, cellSize); // initialize new
+																// maze
+
+	ControlP5 cp5; // library for buttons and timer
+
+	Bang startButton; // button to start game
+	boolean started = false; // has game been started
+
+	Bang continueButton; // button to continue game
+	Bang pauseButton; // button to pause game
+	boolean paused = false; // is game paused
+
+	int timeOnPause = 0; // how long was game paused
+
+	ControlTimer time = new ControlTimer();
+
+	// set starting cell for maze creation
+	int startingIndex1 = 0;
+	int startingIndex2 = ThreadLocalRandom.current().nextInt(0, maze.height);;
+
+	// set end point -> goal
+	int endIndex1 = size - 1;
+	int endIndex2 = ThreadLocalRandom.current().nextInt(0, maze.height);
+
+	// create a new maze and set player to its start
+	public void initializeNewMaze() {
+
+		int neededTime = Math.round((time.time() / 1000)); // time player needed
+															// to finish level
+
+		// in case player needs more than X seconds, next level should be more
+		// difficult
+		if (neededTime > 20) {
+			size--;
+
+			goalReached = false;
+
+			cellSize = 450 / size;
+			creat = new HuntAndKill();// set strategy for maze creation
+			p = new Player(this, cellSize);// initialize player
+			maze = new Maze(size, size, this, creat, cellSize); // initialize
+																// new maze grid
+
+			startingIndex1 = 0;
+			startingIndex2 = ThreadLocalRandom.current().nextInt(0, maze.height);
+
+			// set end point -> goal
+			endIndex1 = size - 1;
+			endIndex2 = ThreadLocalRandom.current().nextInt(0, maze.height);
+
+			// create maze with initialized criteria
+			maze.creator.createMaze(maze.mazeFields[startingIndex1][startingIndex2],
+					maze.mazeFields[endIndex1][endIndex2]);
+
+			// set startingPosition of player
+			p.setStartPosition(startingIndex1 * maze.cellSize + maze.cellSize / 3,
+					startingIndex2 * maze.cellSize + maze.cellSize / 2);
+
+			// set time to zero
+			time = new ControlTimer();
+		}
+
+		// next level should be easier
+		else {
+
+			size++;
+
+			goalReached = false;
+
+			cellSize = 450 / size;
+			creat = new HuntAndKill();// set strategy for maze creation
+			p = new Player(this, cellSize);// initialize player
+			maze = new Maze(size, size, this, creat, cellSize);
+			startingIndex1 = 0;
+			startingIndex2 = ThreadLocalRandom.current().nextInt(0, maze.height);
+
+			// set end point -> goal
+			endIndex1 = size - 1;
+			endIndex2 = ThreadLocalRandom.current().nextInt(0, maze.height);
+
+			maze.creator.createMaze(maze.mazeFields[startingIndex1][startingIndex2],
+					maze.mazeFields[endIndex1][endIndex2]);
+			// set startingPosition of player
+			p.setStartPosition(startingIndex1 * maze.cellSize + maze.cellSize / 3,
+					startingIndex2 * maze.cellSize + maze.cellSize / 2);
+
+			time = new ControlTimer();
+		}
+
+	}
+
+	public static void main(String[] args) {
+		PApplet.main("UsingProcessing");
+	}
+
+	// set size of output window, P3D is used for enabling lightening effects
+	public void settings() {
+		size(600, 600, P3D);
+
+	}
+
+	// set up buttons
+	public void setup() {
+		cp5 = new ControlP5(this);
+		startButton = new Bang(cp5, "Start");
+		startButton.setPosition(300, 300).setSize(60, 60);
+		continueButton = new Bang(cp5, "Continue");
+		continueButton.setPosition(-20, -20).setSize(5, 5);
+		pauseButton = new Bang(cp5, "Pause");
+		pauseButton.setPosition(-10, -10).setSize(5, 5);
+
+		// initialize first level's maze
+		initializeNewMaze();
+	}
+
+	// process button click on start
+	public void Start() {
+		started = true;
+	}
+
+	// process button click on pause
+	public void Pause() {
+		paused = true;
+		pauseButton.setPosition(-10, -10).setSize(5, 5);
+	}
+
+	// process button click on continue
+	public void Continue() {
+		paused = false;
+	}
+
+	// process key press to move player
+	public void keyPressed() {
+		if (key == 'd' || key == 'D') {
+			p.right = true;
+		}
+		if (key == 's' || key == 'S') {
+			p.down = true;
+		}
+		if (key == 'a' || key == 'A') {
+			p.left = true;
+		}
+		if (key == 'w' || key == 'W') {
+			p.up = true;
+		}
+		p.move();
+	}
+
+	public void keyReleased() {
+		if (key == 'd' || key == 'D') {
+			p.right = false;
+		}
+		if (key == 's' || key == 'S') {
+			p.down = false;
+		}
+		if (key == 'a' || key == 'A') {
+			p.left = false;
+		}
+		if (key == 'w' || key == 'W') {
+			p.up = false;
+		}
+		p.move();
+
+	}
+
+	// draw on output screen
+	public void draw() {
+		fill(0);
+		rect(0, 0, 600, 600);
+
+		// if paused, show pause screen
+		if (paused) {
+			rect(0, 0, 600, 600);
+			continueButton.setPosition(300, 300).setSize(60, 60);
+		}
+
+		else {
+
+			// when game is started
+			if (started) {
+
+				cp5.remove("Start"); // remove start button
+
+				// if goal is not reached yet
+				if (!(goalReached)) {
+
+					fill(255, 255, 255);
+
+					// show counting time in minutes and seconds
+					text(Math.round(time.time() / 1000 / 60 - timeOnPause)// minutes
+							+ ":" + Math.round((time.time() / 1000) % 60 - timeOnPause), 500, 20);// seconds
+
+					// spotlight on pause button
+					spotLight(255.0f, 255.0f, 255.0f, // color of the spotlight
+														// in RGB
+							530, 130, 1000, // position of spotlight (follows
+											// player position)
+							0, 0, -1, // direction in which the light point
+							PI / 2, // angle of the light
+							600); // concentration of the light
+
+					// view pause button
+					pauseButton.setPosition(500, 100).setSize(60, 60);
+
+					// spotlight following player
+					spotLight(255.0f, 255.0f, 255.0f, // color of the spotlight
+														// in RGB
+							p.position.x, p.position.y, 1000, // position of
+																// spotlight
+																// (follows
+																// player
+																// position)
+							0, 0, -1, // direction in which the light point
+							PI / 2, // angle of the light
+							600); // concentration of the light
+
+					// display maze
+
+					fill(255, 255, 255);
+					stroke(255, 255, 255);
+					maze.printMaze();
+
+					// print starting point
+					fill(255, 0, 0);
+					triangle(startingIndex1, // edge 1
+							startingIndex2 * cellSize, startingIndex1, // edge 2
+							startingIndex2 * cellSize + cellSize - 2, startingIndex1 + cellSize - 5, // edge
+																										// 3
+							startingIndex2 * cellSize + cellSize / 2);
+
+					// print end point
+					fill(0, 255, 0);
+					triangle(endIndex1 * cellSize, endIndex2 * cellSize, endIndex1 * cellSize,
+							endIndex2 * cellSize + cellSize - 2,
+
+							endIndex1 * cellSize + cellSize - 5, endIndex2 * cellSize + cellSize / 2);
+
+					// check for collision with horizontal walls
+					for (int i = 0; i < maze.horizontalWalls.length; i++) {
+						for (int j = 0; j < maze.horizontalWalls[0].length; j++) {
+							p.collisionHorizontal(maze.horizontalWalls[i][j]);
+
+						}
+
+					}
+
+					// check for collision with vertical walls
+					for (int i = 0; i < maze.verticalWalls.length; i++) {
+						for (int j = 0; j < maze.verticalWalls[0].length; j++) {
+							p.collisionVertical(maze.verticalWalls[i][j]);
+						}
+
+					}
+
+					// move player
+					p.move();
+
+					// draw player on current position
+					p.drawPlayer();
+
+					goalReached = p.goalReached(size * cellSize);
+				}
+
+				// if goal is reached, initialize new maze
+				else {
+					initializeNewMaze();
+				}
+			}
+		}
+	}
+
+}
