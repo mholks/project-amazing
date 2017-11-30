@@ -144,7 +144,7 @@ public class UsingProcessing extends PApplet {
 		started = true;
 
 		// initialize first level's maze
-		initializeAllRecursive(complexityClass);
+		initializeNewMaze(complexityClass);
 	}
 
 	// process button click on pause
@@ -306,11 +306,11 @@ public class UsingProcessing extends PApplet {
 					// difficult
 					if (neededTime > allowedTimeForLevel && complexityClass>1) {
 					complexityClass--;
-					initializeAllRecursive(complexityClass);
+					initializeNewMaze(complexityClass);
 					}
 					else{
 						complexityClass++;
-						initializeAllRecursive(complexityClass);
+						initializeNewMaze(complexityClass);
 					}
 				}
 			}
@@ -532,7 +532,6 @@ public class UsingProcessing extends PApplet {
 			// set startingPosition of player
 				p.setStartPosition(startingIndex1 * maze.cellSize + maze.cellSize / 3,
 						startingIndex2 * maze.cellSize + maze.cellSize / 2);
-
-			
+				
 			}
 }

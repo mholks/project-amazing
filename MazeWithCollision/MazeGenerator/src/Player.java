@@ -1,6 +1,5 @@
 import processing.core.PApplet;
 import processing.core.*;
-import processing.core.PImage;
 
 public class Player {
 	PVector velocity; //player's velocity
@@ -14,7 +13,6 @@ public class Player {
 	float acceleration; 
 	float radius; //radius of player icon
 	float deceleration;
-	PImage image; //image for torch effect
 	int cellSize;
 	
 	public Player(PApplet par, int cellSize) {
@@ -33,14 +31,11 @@ public class Player {
 		position = new PVector(0, 0);
 		position.x = posW;
 		position.y=posH;
-		image = parent.loadImage("C:\\Users\\KerstinJ\\Documents\\RUC\\Projekt\\torch.png");
-		image.resize(4000,2000);
 	}
 	
 	public void drawPlayer() {
 		parent.fill(255, 255, 0);
 		parent.ellipse(position.x, position.y, radius, radius); 	  
-	//	parent.image(image, position.x, position.y);
 	}
 
 	//process key control
@@ -109,25 +104,7 @@ public class Player {
 				}
 			}
 		}
-		/*	if (position.x + radius > wall.posX * cellSize && position.x < wall.posX * cellSize + wall.wallWidth) {
-				if(position.y > wall.posY*cellSize && position.y < wall.posY *cellSize + wall.wallHeight) {
 
-				if(velocity.x < 0)
-				{
-					position.x = wall.posX * cellSize + wall.wallWidth+radius;
-
-				}
-				else
-				{
-					position.x = (wall.posX) * cellSize-radius;
-				}
-				}
-			
-				
-
-				}
-		}
-		*/
 	}
 	
 	
