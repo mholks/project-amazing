@@ -18,6 +18,8 @@ public class UsingProcessing extends PApplet {
 	Maze maze = new Maze(size, size, this, creat, cellSize); // initialize new
 																// maze
 
+	int allowedTimeForLevel = 20;
+	
 	ControlP5 cp5; // library for buttons and timer
 
 	Bang startButton; // button to start game
@@ -39,72 +41,81 @@ public class UsingProcessing extends PApplet {
 	int endIndex1 = size - 1;
 	int endIndex2 = ThreadLocalRandom.current().nextInt(0, maze.height);
 
+	int complexityClass = 1;
+	
 	// create a new maze and set player to its start
-	public void initializeNewMaze() {
+	public void initializeNewMaze(int complexity) {
+		goalReached = false;
 
-		int neededTime = Math.round((time.time() / 1000)); // time player needed
-															// to finish level
-
-		// in case player needs more than X seconds, next level should be more
-		// difficult
-		if (neededTime > 20) {
-			size--;
-
-			goalReached = false;
-
-			cellSize = 450 / size;
+		// set time to zero
+		time = new ControlTimer();
+		
+		if (complexity == 1){
 			creat = new HuntAndKill();// set strategy for maze creation
-			p = new Player(this, cellSize);// initialize player
-			maze = new Maze(size, size, this, creat, cellSize); // initialize
-																// new maze grid
+			size=5;
+			allowedTimeForLevel = 20;
+		}
+		
+		if (complexity == 2){
+			creat = new HuntAndKill();// set strategy for maze creation
+			size=6;
+			allowedTimeForLevel = 20;
+		}
+		
+		if (complexity == 3){
+			creat = new RecursiveBacktracker();// set strategy for maze creation
+			size = 7;
+			allowedTimeForLevel = 20;
+		}
+		
+		if (complexity == 4){
+			creat = new RecursiveBacktracker();// set strategy for maze creation
+			size= 8;
+			allowedTimeForLevel = 20;
+		}
+		if (complexity == 5){
+			creat = new Kruskal();// set strategy for maze creation
+			size=9;
+			allowedTimeForLevel = 20;
+		}
+		
+		if (complexity == 6){
+			creat = new Kruskal();// set strategy for maze creation
+			size=10;
+			allowedTimeForLevel = 20;
+		}
+		
+	
+		if (complexity == 7){
+			creat = new Kruskal();// set strategy for maze creation
+			size = 15;
+			allowedTimeForLevel = 25;
+		}
+		
+		
+		cellSize = 450 / size;
+		p = new Player(this, cellSize);// initialize player
+		
+		maze = new Maze(size,size, this, creat, cellSize); // initialize new maze grid
+		
+		startingIndex1 = 0;
+		startingIndex2 = ThreadLocalRandom.current().nextInt(0, maze.height);
 
-			startingIndex1 = 0;
-			startingIndex2 = ThreadLocalRandom.current().nextInt(0, maze.height);
+		// set end point -> goal
+		endIndex1 = size - 1;
+		endIndex2 = ThreadLocalRandom.current().nextInt(0, maze.height);
 
-			// set end point -> goal
-			endIndex1 = size - 1;
-			endIndex2 = ThreadLocalRandom.current().nextInt(0, maze.height);
-
-			// create maze with initialized criteria
-			maze.creator.createMaze(maze.mazeFields[startingIndex1][startingIndex2],
-					maze.mazeFields[endIndex1][endIndex2]);
-
-			// set startingPosition of player
+		// create maze with initialized criteria
+		maze.creator.createMaze(maze.mazeFields[startingIndex1][startingIndex2],
+				maze.mazeFields[endIndex1][endIndex2]);
+			
+		// set startingPosition of player
 			p.setStartPosition(startingIndex1 * maze.cellSize + maze.cellSize / 3,
 					startingIndex2 * maze.cellSize + maze.cellSize / 2);
 
-			// set time to zero
-			time = new ControlTimer();
+		
 		}
 
-		// next level should be easier
-		else {
-
-			size++;
-
-			goalReached = false;
-
-			cellSize = 450 / size;
-			creat = new HuntAndKill();// set strategy for maze creation
-			p = new Player(this, cellSize);// initialize player
-			maze = new Maze(size, size, this, creat, cellSize);
-			startingIndex1 = 0;
-			startingIndex2 = ThreadLocalRandom.current().nextInt(0, maze.height);
-
-			// set end point -> goal
-			endIndex1 = size - 1;
-			endIndex2 = ThreadLocalRandom.current().nextInt(0, maze.height);
-
-			maze.creator.createMaze(maze.mazeFields[startingIndex1][startingIndex2],
-					maze.mazeFields[endIndex1][endIndex2]);
-			// set startingPosition of player
-			p.setStartPosition(startingIndex1 * maze.cellSize + maze.cellSize / 3,
-					startingIndex2 * maze.cellSize + maze.cellSize / 2);
-
-			time = new ControlTimer();
-		}
-
-	}
 
 	public static void main(String[] args) {
 		PApplet.main("UsingProcessing");
@@ -126,13 +137,14 @@ public class UsingProcessing extends PApplet {
 		pauseButton = new Bang(cp5, "Pause");
 		pauseButton.setPosition(-10, -10).setSize(5, 5);
 
-		// initialize first level's maze
-		initializeNewMaze();
 	}
 
 	// process button click on start
 	public void Start() {
 		started = true;
+
+		// initialize first level's maze
+		initializeAllRecursive(complexityClass);
 	}
 
 	// process button click on pause
@@ -200,21 +212,24 @@ public class UsingProcessing extends PApplet {
 
 				// if goal is not reached yet
 				if (!(goalReached)) {
+					
+					fill(0);
 
 					fill(255, 255, 255);
+					text(complexityClass, 500,500);
 
 					// show counting time in minutes and seconds
 					text(Math.round(time.time() / 1000 / 60 - timeOnPause)// minutes
 							+ ":" + Math.round((time.time() / 1000) % 60 - timeOnPause), 500, 20);// seconds
 
 					// spotlight on pause button
-					spotLight(255.0f, 255.0f, 255.0f, // color of the spotlight
+					/*spotLight(255.0f, 255.0f, 255.0f, // color of the spotlight
 														// in RGB
 							530, 130, 1000, // position of spotlight (follows
 											// player position)
 							0, 0, -1, // direction in which the light point
 							PI / 2, // angle of the light
-							600); // concentration of the light
+							600); // concentration of the light */
 
 					// view pause button
 					pauseButton.setPosition(500, 100).setSize(60, 60);
@@ -237,6 +252,9 @@ public class UsingProcessing extends PApplet {
 					stroke(255, 255, 255);
 					maze.printMaze();
 
+					fill(0);
+					rect((endIndex1+1)*cellSize,endIndex2*cellSize,4,cellSize);
+					
 					// print starting point
 					fill(255, 0, 0);
 					triangle(startingIndex1, // edge 1
@@ -247,7 +265,7 @@ public class UsingProcessing extends PApplet {
 
 					// print end point
 					fill(0, 255, 0);
-					triangle(endIndex1 * cellSize, endIndex2 * cellSize, endIndex1 * cellSize,
+					triangle(endIndex1 * cellSize + 4, endIndex2 * cellSize, endIndex1 * cellSize + 4,
 							endIndex2 * cellSize + cellSize - 2,
 
 							endIndex1 * cellSize + cellSize - 5, endIndex2 * cellSize + cellSize / 2);
@@ -280,10 +298,241 @@ public class UsingProcessing extends PApplet {
 
 				// if goal is reached, initialize new maze
 				else {
-					initializeNewMaze();
+
+					int neededTime = Math.round((time.time() / 1000)); // time player needed
+																		// to finish level
+					
+					// in case player needs more than X seconds, next level should be more
+					// difficult
+					if (neededTime > allowedTimeForLevel && complexityClass>1) {
+					complexityClass--;
+					initializeAllRecursive(complexityClass);
+					}
+					else{
+						complexityClass++;
+						initializeAllRecursive(complexityClass);
+					}
 				}
 			}
 		}
 	}
+	
+	//game version only with RecursiveBacktracker
+		public void initializeAllRecursive(int complexity) {
+			goalReached = false;
 
+			// set time to zero
+			time = new ControlTimer();
+			
+			if (complexity == 1){
+				creat = new RecursiveBacktracker();// set strategy for maze creation
+				size=5;
+				allowedTimeForLevel = 20;
+			}
+			
+			if (complexity == 2){
+				creat = new RecursiveBacktracker();// set strategy for maze creation
+				size=6;
+				allowedTimeForLevel = 20;
+			}
+			
+			if (complexity == 3){
+				creat = new RecursiveBacktracker();// set strategy for maze creation
+				size = 7;
+				allowedTimeForLevel = 20;
+			}
+			
+			if (complexity == 4){
+				creat = new RecursiveBacktracker();// set strategy for maze creation
+				size= 8;
+				allowedTimeForLevel = 20;
+			}
+			if (complexity == 5){
+				creat = new RecursiveBacktracker();// set strategy for maze creation
+				size=9;
+				allowedTimeForLevel = 20;
+			}
+			
+			if (complexity == 6){
+				creat = new RecursiveBacktracker();// set strategy for maze creation
+				size=10;
+				allowedTimeForLevel = 20;
+			}
+			
+		
+			if (complexity == 7){
+				creat = new RecursiveBacktracker();// set strategy for maze creation
+				size = 15;
+				allowedTimeForLevel = 25;
+			}
+			
+			
+			cellSize = 450 / size;
+			p = new Player(this, cellSize);// initialize player
+			
+			maze = new Maze(size,size, this, creat, cellSize); // initialize new maze grid
+			
+			startingIndex1 = 0;
+			startingIndex2 = ThreadLocalRandom.current().nextInt(0, maze.height);
+
+			// set end point -> goal
+			endIndex1 = size - 1;
+			endIndex2 = ThreadLocalRandom.current().nextInt(0, maze.height);
+
+			// create maze with initialized criteria
+			maze.creator.createMaze(maze.mazeFields[startingIndex1][startingIndex2],
+					maze.mazeFields[endIndex1][endIndex2]);
+				
+			// set startingPosition of player
+				p.setStartPosition(startingIndex1 * maze.cellSize + maze.cellSize / 3,
+						startingIndex2 * maze.cellSize + maze.cellSize / 2);
+
+			
+			}
+	
+		//game version only with Kruskal
+		public void initializeAllKruskal(int complexity) {
+			goalReached = false;
+
+			// set time to zero
+			time = new ControlTimer();
+			
+			if (complexity == 1){
+				creat = new Kruskal();// set strategy for maze creation
+				size=5;
+				allowedTimeForLevel = 20;
+			}
+			
+			if (complexity == 2){
+				creat = new Kruskal();// set strategy for maze creation
+				size=6;
+				allowedTimeForLevel = 20;
+			}
+			
+			if (complexity == 3){
+				creat = new Kruskal();// set strategy for maze creation
+				size = 7;
+				allowedTimeForLevel = 20;
+			}
+			
+			if (complexity == 4){
+				creat = new Kruskal();// set strategy for maze creation
+				size= 8;
+				allowedTimeForLevel = 20;
+			}
+			if (complexity == 5){
+				creat = new Kruskal();// set strategy for maze creation
+				size=9;
+				allowedTimeForLevel = 20;
+			}
+			
+			if (complexity == 6){
+				creat = new Kruskal();// set strategy for maze creation
+				size=10;
+				allowedTimeForLevel = 20;
+			}
+			
+		
+			if (complexity == 7){
+				creat = new Kruskal();// set strategy for maze creation
+				size = 15;
+				allowedTimeForLevel = 25;
+			}
+			
+			
+			cellSize = 450 / size;
+			p = new Player(this, cellSize);// initialize player
+			
+			maze = new Maze(size,size, this, creat, cellSize); // initialize new maze grid
+			
+			startingIndex1 = 0;
+			startingIndex2 = ThreadLocalRandom.current().nextInt(0, maze.height);
+
+			// set end point -> goal
+			endIndex1 = size - 1;
+			endIndex2 = ThreadLocalRandom.current().nextInt(0, maze.height);
+
+			// create maze with initialized criteria
+			maze.creator.createMaze(maze.mazeFields[startingIndex1][startingIndex2],
+					maze.mazeFields[endIndex1][endIndex2]);
+				
+			// set startingPosition of player
+				p.setStartPosition(startingIndex1 * maze.cellSize + maze.cellSize / 3,
+						startingIndex2 * maze.cellSize + maze.cellSize / 2);
+
+			
+			}
+
+		// game version all HuntAndKill
+		public void initializeAllHuntAndKill(int complexity) {
+			goalReached = false;
+
+			// set time to zero
+			time = new ControlTimer();
+			
+			if (complexity == 1){
+				creat = new HuntAndKill();// set strategy for maze creation
+				size=5;
+				allowedTimeForLevel = 20;
+			}
+			
+			if (complexity == 2){
+				creat = new HuntAndKill();// set strategy for maze creation
+				size=6;
+				allowedTimeForLevel = 20;
+			}
+			
+			if (complexity == 3){
+				creat = new HuntAndKill();// set strategy for maze creation
+				size = 7;
+				allowedTimeForLevel = 20;
+			}
+			
+			if (complexity == 4){
+				creat = new HuntAndKill();// set strategy for maze creation
+				size= 8;
+				allowedTimeForLevel = 20;
+			}
+			if (complexity == 5){
+				creat = new HuntAndKill();// set strategy for maze creation
+				size=9;
+				allowedTimeForLevel = 20;
+			}
+			
+			if (complexity == 6){
+				creat = new HuntAndKill();// set strategy for maze creation
+				size=10;
+				allowedTimeForLevel = 20;
+			}
+			
+		
+			if (complexity == 7){
+				creat = new HuntAndKill();// set strategy for maze creation
+				size = 15;
+				allowedTimeForLevel = 25;
+			}
+			
+			
+			cellSize = 450 / size;
+			p = new Player(this, cellSize);// initialize player
+			
+			maze = new Maze(size,size, this, creat, cellSize); // initialize new maze grid
+			
+			startingIndex1 = 0;
+			startingIndex2 = ThreadLocalRandom.current().nextInt(0, maze.height);
+
+			// set end point -> goal
+			endIndex1 = size - 1;
+			endIndex2 = ThreadLocalRandom.current().nextInt(0, maze.height);
+
+			// create maze with initialized criteria
+			maze.creator.createMaze(maze.mazeFields[startingIndex1][startingIndex2],
+					maze.mazeFields[endIndex1][endIndex2]);
+				
+			// set startingPosition of player
+				p.setStartPosition(startingIndex1 * maze.cellSize + maze.cellSize / 3,
+						startingIndex2 * maze.cellSize + maze.cellSize / 2);
+
+			
+			}
 }
