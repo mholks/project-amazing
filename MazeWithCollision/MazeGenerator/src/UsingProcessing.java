@@ -151,11 +151,13 @@ public class UsingProcessing extends PApplet {
 	public void Pause() {
 		paused = true;
 		pauseButton.setPosition(-10, -10).setSize(5, 5);
+		
 	}
 
 	// process button click on continue
 	public void Continue() {
 		paused = false;
+		time = new ControlTimer();
 	}
 
 	// process key press to move player
