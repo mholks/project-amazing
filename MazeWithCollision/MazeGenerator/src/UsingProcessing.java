@@ -221,6 +221,8 @@ public class UsingProcessing extends PApplet {
 					fill(0);
 
 					fill(255, 255, 255);
+					
+					textSize(20);
 					text(complexityClass, 500,500);
 
 					// show counting time in minutes and seconds
