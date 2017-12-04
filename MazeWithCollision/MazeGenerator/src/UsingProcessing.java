@@ -150,6 +150,7 @@ public class UsingProcessing extends PApplet {
 	// process button click on pause
 	public void Pause() {
 		paused = true;
+		
 		pauseButton.setPosition(-10, -10).setSize(5, 5);
 		
 	}
@@ -157,6 +158,8 @@ public class UsingProcessing extends PApplet {
 	// process button click on continue
 	public void Continue() {
 		paused = false;
+		
+		//reset time to zero (only for testing)
 		time = new ControlTimer();
 	}
 
