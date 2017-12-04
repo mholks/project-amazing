@@ -144,7 +144,7 @@ public class UsingProcessing extends PApplet {
 		started = true;
 
 		// initialize first level's maze
-		initializeAllRecursive(complexityClass);
+		initializeAllHuntAndKill(complexityClass);
 	}
 
 	// process button click on pause
@@ -307,7 +307,7 @@ public class UsingProcessing extends PApplet {
 				// if goal is reached, initialize new maze
 				else {
 					complexityClass++;
-					initializeAllRecursive(complexityClass);
+					initializeAllHuntAndKill(complexityClass);
 					
 					
 					
