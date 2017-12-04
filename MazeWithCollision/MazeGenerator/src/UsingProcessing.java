@@ -44,52 +44,56 @@ public class UsingProcessing extends PApplet {
 	int complexityClass = 1;
 	
 	// create a new maze and set player to its start
-	public void initializeNewMaze(int complexity) {
+	/*public void initializeNewMaze(int complexity) {
 		goalReached = false;
 
 		// set time to zero
 		time = new ControlTimer();
-		
+		for( int i = 0; i> 3; i++) {
 		if (complexity == 1){
-			creat = new HuntAndKill();// set strategy for maze creation
-			size=5;
-			allowedTimeForLevel = 20;
-		}
-		
-		if (complexity == 2){
-			creat = new HuntAndKill();// set strategy for maze creation
-			size=6;
-			allowedTimeForLevel = 20;
-		}
-		
-		if (complexity == 3){
 			creat = new RecursiveBacktracker();// set strategy for maze creation
-			size = 7;
-			allowedTimeForLevel = 20;
+			size=5;
+			
+			//allowedTimeForLevel = 20;
+			}
 		}
 		
 		if (complexity == 4){
-			creat = new RecursiveBacktracker();// set strategy for maze creation
-			size= 8;
-			allowedTimeForLevel = 20;
+			creat = new HuntAndKill();// set strategy for maze creation
+			size=7;
+		
+			//allowedTimeForLevel = 20;
 		}
+		
 		if (complexity == 5){
-			creat = new Kruskal();// set strategy for maze creation
-			size=9;
-			allowedTimeForLevel = 20;
+			creat = new RecursiveBacktracker();// set strategy for maze creation
+			size = 7;
+		
+			//allowedTimeForLevel = 20;
 		}
 		
 		if (complexity == 6){
-			creat = new Kruskal();// set strategy for maze creation
-			size=10;
-			allowedTimeForLevel = 20;
+			creat = new RecursiveBacktracker();// set strategy for maze creation
+			size= 8;
+			
+			//allowedTimeForLevel = 20;
 		}
-		
-	
 		if (complexity == 7){
 			creat = new Kruskal();// set strategy for maze creation
+			size=9;
+			//allowedTimeForLevel = 20;
+		}
+		
+		if (complexity == 8){
+			creat = new Kruskal();// set strategy for maze creation
+			size=10;
+			//allowedTimeForLevel = 20;
+		}
+	
+		if (complexity == 9){
+			creat = new Kruskal();// set strategy for maze creation
 			size = 15;
-			allowedTimeForLevel = 25;
+			//allowedTimeForLevel = 25;
 		}
 		
 		
@@ -110,11 +114,11 @@ public class UsingProcessing extends PApplet {
 				maze.mazeFields[endIndex1][endIndex2]);
 			
 		// set startingPosition of player
-			p.setStartPosition(startingIndex1 * maze.cellSize + maze.cellSize / 3,
+			p.setStartPosition(startingIndex1 * maze.cellSize + maze.cellSize / 3 + 2,
 					startingIndex2 * maze.cellSize + maze.cellSize / 2);
 
 		
-		}
+		} */
 
 
 	public static void main(String[] args) {
@@ -144,7 +148,7 @@ public class UsingProcessing extends PApplet {
 		started = true;
 
 		// initialize first level's maze
-		initializeNewMaze(complexityClass);
+		initializeAllRecursive(complexityClass);
 	}
 
 	// process button click on pause
@@ -298,8 +302,12 @@ public class UsingProcessing extends PApplet {
 
 				// if goal is reached, initialize new maze
 				else {
-
-					int neededTime = Math.round((time.time() / 1000)); // time player needed
+					complexityClass++;
+					initializeAllRecursive(complexityClass);
+					
+					
+					
+					/*int neededTime = Math.round((time.time() / 1000)); // time player needed
 																		// to finish level
 					
 					// in case player needs more than X seconds, next level should be more
@@ -311,7 +319,7 @@ public class UsingProcessing extends PApplet {
 					else{
 						complexityClass++;
 						initializeNewMaze(complexityClass);
-					}
+					}*/
 				}
 			}
 		}
@@ -324,47 +332,120 @@ public class UsingProcessing extends PApplet {
 			// set time to zero
 			time = new ControlTimer();
 			
+			
 			if (complexity == 1){
-				creat = new RecursiveBacktracker();// set strategy for maze creation
-				size=5;
-				allowedTimeForLevel = 20;
-			}
+					creat = new RecursiveBacktracker();// set strategy for maze creation
+					size=5;
+					//allowedTimeForLevel = 20;
+					}
 			
 			if (complexity == 2){
 				creat = new RecursiveBacktracker();// set strategy for maze creation
-				size=6;
-				allowedTimeForLevel = 20;
-			}
-			
+				size=5;
+				//allowedTimeForLevel = 20;
+				}
 			if (complexity == 3){
+				
 				creat = new RecursiveBacktracker();// set strategy for maze creation
-				size = 7;
-				allowedTimeForLevel = 20;
-			}
-			
+				size=5;
+				//allowedTimeForLevel = 20;
+				}
+				
 			if (complexity == 4){
-				creat = new RecursiveBacktracker();// set strategy for maze creation
-				size= 8;
-				allowedTimeForLevel = 20;
-			}
+					creat = new RecursiveBacktracker();// set strategy for maze creation
+					size=7;
+					//allowedTimeForLevel = 20;
+				}
 			if (complexity == 5){
+				
 				creat = new RecursiveBacktracker();// set strategy for maze creation
-				size=9;
-				allowedTimeForLevel = 20;
-			}
-			
+				size=7;
+				//allowedTimeForLevel = 20;
+				}
+				
 			if (complexity == 6){
-				creat = new RecursiveBacktracker();// set strategy for maze creation
-				size=10;
-				allowedTimeForLevel = 20;
+					creat = new RecursiveBacktracker();// set strategy for maze creation
+					size=7;
+					//allowedTimeForLevel = 20;
+				}
+			if (complexity == 7){
+					creat = new RecursiveBacktracker();// set strategy for maze creation
+					size=9;
+					//allowedTimeForLevel = 20;
+				}
+		
+			if (complexity == 8){
+					creat = new RecursiveBacktracker();// set strategy for maze creation
+					size=9;
+					//allowedTimeForLevel = 20;
+				}
+			
+			if (complexity == 9){
+					creat = new RecursiveBacktracker();// set strategy for maze creation
+					size=9;
+					//allowedTimeForLevel = 20;
+				}
+			
+			if (complexity == 10){
+					creat = new RecursiveBacktracker();// set strategy for maze creation
+					size=11;
+					//allowedTimeForLevel = 20;
+				}
+			
+			if (complexity == 11){
+					creat = new RecursiveBacktracker();// set strategy for maze creation
+					size=11;
+					//allowedTimeForLevel = 20;
+				}
+			
+			if (complexity == 12){
+					creat = new RecursiveBacktracker();// set strategy for maze creation
+					size=11;
+					//allowedTimeForLevel = 20;
+				}
+			
+			if (complexity == 13){
+					creat = new RecursiveBacktracker();// set strategy for maze creation
+					size=13;
+					//allowedTimeForLevel = 20;
+				}
+	
+			if (complexity == 14){
+					creat = new RecursiveBacktracker();// set strategy for maze creation
+					size=13;
+					//allowedTimeForLevel = 20;
+			}
+			if (complexity == 15){	
+					creat = new RecursiveBacktracker();// set strategy for maze creation
+					size=13;
+					//allowedTimeForLevel = 20;
+			}
+		
+			if (complexity == 16){
+					creat = new RecursiveBacktracker();// set strategy for maze creation
+					size=15;
+					//allowedTimeForLevel = 20;
 			}
 			
-		
-			if (complexity == 7){
-				creat = new RecursiveBacktracker();// set strategy for maze creation
-				size = 15;
-				allowedTimeForLevel = 25;
+			if (complexity == 17){
+					creat = new RecursiveBacktracker();// set strategy for maze creation
+					size=15;
+					//allowedTimeForLevel = 20;
 			}
+		
+			if (complexity == 18){
+					creat = new RecursiveBacktracker();// set strategy for maze creation
+					size=15;
+					//allowedTimeForLevel = 20;
+			}
+			if (complexity == 19) {
+				
+				fill(0);
+				stroke(20);
+				text("Thank you for playing", 250,250);
+				
+			}
+			
 			
 			
 			cellSize = 450 / size;
@@ -397,48 +478,119 @@ public class UsingProcessing extends PApplet {
 			// set time to zero
 			time = new ControlTimer();
 			
+				
 			if (complexity == 1){
 				creat = new Kruskal();// set strategy for maze creation
 				size=5;
-				allowedTimeForLevel = 20;
+				//allowedTimeForLevel = 20;
+				}
+		
+		if (complexity == 2){
+			creat = new Kruskal();// set strategy for maze creation
+			size=5;
+			//allowedTimeForLevel = 20;
+			}
+		if (complexity == 3){
+			
+			creat = new Kruskal();// set strategy for maze creation
+			size=5;
+			//allowedTimeForLevel = 20;
 			}
 			
-			if (complexity == 2){
+		if (complexity == 4){
 				creat = new Kruskal();// set strategy for maze creation
-				size=6;
-				allowedTimeForLevel = 20;
+				size=7;
+				//allowedTimeForLevel = 20;
+			}
+		if (complexity == 5){
+			
+			creat = new Kruskal();// set strategy for maze creation
+			size=7;
+			//allowedTimeForLevel = 20;
 			}
 			
-			if (complexity == 3){
+		if (complexity == 6){
 				creat = new Kruskal();// set strategy for maze creation
-				size = 7;
-				allowedTimeForLevel = 20;
+				size=7;
+				//allowedTimeForLevel = 20;
 			}
-			
-			if (complexity == 4){
-				creat = new Kruskal();// set strategy for maze creation
-				size= 8;
-				allowedTimeForLevel = 20;
-			}
-			if (complexity == 5){
+		if (complexity == 7){
 				creat = new Kruskal();// set strategy for maze creation
 				size=9;
-				allowedTimeForLevel = 20;
+				//allowedTimeForLevel = 20;
 			}
-			
-			if (complexity == 6){
+	
+		if (complexity == 8){
 				creat = new Kruskal();// set strategy for maze creation
-				size=10;
-				allowedTimeForLevel = 20;
+				size=9;
+				//allowedTimeForLevel = 20;
 			}
-			
 		
-			if (complexity == 7){
+		if (complexity == 9){
 				creat = new Kruskal();// set strategy for maze creation
-				size = 15;
-				allowedTimeForLevel = 25;
+				size=9;
+				//allowedTimeForLevel = 20;
 			}
+		
+		if (complexity == 10){
+				creat = new Kruskal();// set strategy for maze creation
+				size=11;
+				//allowedTimeForLevel = 20;
+			}
+		
+		if (complexity == 11){
+				creat = new Kruskal();// set strategy for maze creation
+				size=11;
+				//allowedTimeForLevel = 20;
+			}
+		
+		if (complexity == 12){
+				creat = new Kruskal();// set strategy for maze creation
+				size=11;
+				//allowedTimeForLevel = 20;
+			}
+		
+		if (complexity == 13){
+				creat = new Kruskal();// set strategy for maze creation
+				size=13;
+				//allowedTimeForLevel = 20;
+			}
+
+		if (complexity == 14){
+				creat = new Kruskal();// set strategy for maze creation
+				size=13;
+				//allowedTimeForLevel = 20;
+		}
+		if (complexity == 15){	
+				creat = new Kruskal();// set strategy for maze creation
+				size=13;
+				//allowedTimeForLevel = 20;
+		}
+	
+		if (complexity == 16){
+				creat = new Kruskal();// set strategy for maze creation
+				size=15;
+				//allowedTimeForLevel = 20;
+		}
+		
+		if (complexity == 17){
+				creat = new Kruskal();// set strategy for maze creation
+				size=15;
+				//allowedTimeForLevel = 20;
+		}
+	
+		if (complexity == 18){
+				creat = new Kruskal();// set strategy for maze creation
+				size=15;
+				//allowedTimeForLevel = 20;
+		}
+		if (complexity == 19) {
 			
+			fill(0);
+			stroke(20);
+			text("Thank you for playing", 250,250);
+			
+		}
 			
 			cellSize = 450 / size;
 			p = new Player(this, cellSize);// initialize player
@@ -470,47 +622,120 @@ public class UsingProcessing extends PApplet {
 			// set time to zero
 			time = new ControlTimer();
 			
+			
 			if (complexity == 1){
 				creat = new HuntAndKill();// set strategy for maze creation
 				size=5;
-				allowedTimeForLevel = 20;
-			}
-			
+				//allowedTimeForLevel = 20;
+				}
+		
 			if (complexity == 2){
 				creat = new HuntAndKill();// set strategy for maze creation
-				size=6;
-				allowedTimeForLevel = 20;
-			}
-			
+				size=5;
+				//allowedTimeForLevel = 20;
+				}
 			if (complexity == 3){
+				
 				creat = new HuntAndKill();// set strategy for maze creation
-				size = 7;
-				allowedTimeForLevel = 20;
-			}
-			
+				size=5;
+				//allowedTimeForLevel = 20;
+				}
+				
 			if (complexity == 4){
-				creat = new HuntAndKill();// set strategy for maze creation
-				size= 8;
-				allowedTimeForLevel = 20;
-			}
+					creat = new HuntAndKill();// set strategy for maze creation
+					size=7;
+					//allowedTimeForLevel = 20;
+				}
 			if (complexity == 5){
+				
 				creat = new HuntAndKill();// set strategy for maze creation
-				size=9;
-				allowedTimeForLevel = 20;
-			}
-			
+				size=7;
+				//allowedTimeForLevel = 20;
+				}
+				
 			if (complexity == 6){
-				creat = new HuntAndKill();// set strategy for maze creation
-				size=10;
-				allowedTimeForLevel = 20;
-			}
-			
-		
+					creat = new HuntAndKill();// set strategy for maze creation
+					size=7;
+					//allowedTimeForLevel = 20;
+				}
 			if (complexity == 7){
-				creat = new HuntAndKill();// set strategy for maze creation
-				size = 15;
-				allowedTimeForLevel = 25;
-			}
+					creat = new HuntAndKill();// set strategy for maze creation
+					size=9;
+					//allowedTimeForLevel = 20;
+				}
+		
+			if (complexity == 8){
+					creat = new HuntAndKill();// set strategy for maze creation
+					size=9;
+					//allowedTimeForLevel = 20;
+				}
+			
+			if (complexity == 9){
+					creat = new HuntAndKill();// set strategy for maze creation
+					size=9;
+					//allowedTimeForLevel = 20;
+				}
+			
+			if (complexity == 10){
+					creat = new HuntAndKill();// set strategy for maze creation
+					size=11;
+					//allowedTimeForLevel = 20;
+				}
+			
+			if (complexity == 11){
+					creat = new HuntAndKill();// set strategy for maze creation
+					size=11;
+					//allowedTimeForLevel = 20;
+				}
+			
+			if (complexity == 12){
+					creat = new HuntAndKill();// set strategy for maze creation
+					size=11;
+					//allowedTimeForLevel = 20;
+				}
+			
+			if (complexity == 13){
+					creat = new HuntAndKill();// set strategy for maze creation
+					size=13;
+					//allowedTimeForLevel = 20;
+				}
+	
+			if (complexity == 14){
+					creat = new HuntAndKill();// set strategy for maze creation
+					size=13;
+					//allowedTimeForLevel = 20;
+				}
+			
+			if (complexity == 15){	
+					creat = new HuntAndKill();// set strategy for maze creation
+					size=13;
+					//allowedTimeForLevel = 20;
+				}
+		
+			if (complexity == 16){
+					creat = new HuntAndKill();// set strategy for maze creation
+					size=15;
+					//allowedTimeForLevel = 20;
+				}
+			
+			if (complexity == 17){
+					creat = new HuntAndKill();// set strategy for maze creation
+					size=15;
+					//allowedTimeForLevel = 20;
+				}
+		
+			if (complexity == 18){
+					creat = new HuntAndKill();// set strategy for maze creation
+					size=15;
+					//allowedTimeForLevel = 20;
+				}
+			
+			if (complexity == 19) {
+				
+				fill(0);
+				stroke(20);
+				text("Thank you for playing", 250,250);
+				}
 			
 			
 			cellSize = 450 / size;
