@@ -204,6 +204,7 @@ public class UsingProcessing extends PApplet {
 
 		// if paused, show pause screen
 		if (paused) {
+			time = new ControlTimer();
 			rect(0, 0, 600, 600);
 			continueButton.setPosition(300, 300).setSize(60, 60);
 		}
@@ -229,16 +230,17 @@ public class UsingProcessing extends PApplet {
 					text(Math.round(time.time() / 1000 / 60 - timeOnPause)// minutes
 							+ ":" + Math.round((time.time() / 1000) % 60 - timeOnPause), 500, 20);// seconds
 
-					// spotlight on pause button
+				// spotlight on pause button
 					spotLight(255.0f, 255.0f, 255.0f, // color of the spotlight
 														// in RGB
-							530, 130, 1000, // position of spotlight 
+							280, 580, 1000, // position of spotlight (follows
+											// player position)
 							0, 0, -1, // direction in which the light point
 							PI / 2, // angle of the light
-							1000); // concentration of the light 
+							600); // concentration of the light 
 
 					// view pause button
-					pauseButton.setPosition(500, 100).setSize(60, 60);
+					pauseButton.setPosition(250, 540).setSize(60, 40);
 
 					// spotlight following player
 					spotLight(255.0f, 255.0f, 255.0f, // color of the spotlight
@@ -483,7 +485,7 @@ public class UsingProcessing extends PApplet {
 					maze.mazeFields[endIndex1][endIndex2]);
 				
 			// set startingPosition of player
-				p.setStartPosition(startingIndex1 * maze.cellSize + maze.cellSize / 3,
+				p.setStartPosition(startingIndex1 * maze.cellSize + maze.cellSize / 3 + 2,
 						startingIndex2 * maze.cellSize + maze.cellSize / 2);
 
 			
@@ -643,7 +645,7 @@ public class UsingProcessing extends PApplet {
 					maze.mazeFields[endIndex1][endIndex2]);
 				
 			// set startingPosition of player
-				p.setStartPosition(startingIndex1 * maze.cellSize + maze.cellSize / 3,
+				p.setStartPosition(startingIndex1 * maze.cellSize + maze.cellSize / 3 + 2,
 						startingIndex2 * maze.cellSize + maze.cellSize / 2);
 
 			
@@ -806,7 +808,7 @@ public class UsingProcessing extends PApplet {
 					maze.mazeFields[endIndex1][endIndex2]);
 				
 			// set startingPosition of player
-				p.setStartPosition(startingIndex1 * maze.cellSize + maze.cellSize / 3,
+				p.setStartPosition(startingIndex1 * maze.cellSize + maze.cellSize / 3 +2,
 						startingIndex2 * maze.cellSize + maze.cellSize / 2);
 				
 			}
