@@ -152,13 +152,13 @@ public class UsingProcessing extends PApplet {
 		paused = true;
 		
 		pauseButton.setPosition(-10, -10).setSize(5, 5);
-		
+		continueButton.setPosition(200, 200).setSize(5, 5);
 	}
 
 	// process button click on continue
 	public void Continue() {
 		paused = false;
-		
+		continueButton.setPosition(-20, -20).setSize(5, 5);
 		//reset time to zero (only for testing)
 		time = new ControlTimer();
 	}
