@@ -41,7 +41,7 @@ public class UsingProcessing extends PApplet {
 	int endIndex1 = size - 1;
 	int endIndex2 = ThreadLocalRandom.current().nextInt(0, maze.height);
 
-	int complexityClass = 5;
+	int complexityClass = 12;
 	
 	// create a new maze and set player to its start
 	public void initializeNewMaze(int complexity) {
@@ -53,20 +53,19 @@ public class UsingProcessing extends PApplet {
 		if (complexity == 1){
 			creat = new Kruskal();// set strategy for maze creation
 			size=5;
-			allowedTimeForLevel = 11;
-			
+			allowedTimeForLevel = 10;
 		}
 		
 		
 		if (complexity == 2){
-			creat = new RecursiveBacktracker();// set strategy for maze creation
-			size=5;
+			creat = new Kruskal();// set strategy for maze creation
+			size=7;
 			allowedTimeForLevel = 17;
 		}
 		
 		if (complexity == 3){
-			creat = new Kruskal();// set strategy for maze creation
-			size = 7;
+			creat = new RecursiveBacktracker();// set strategy for maze creation
+			size = 5;
 			allowedTimeForLevel = 9;
 		}
 		
@@ -77,24 +76,24 @@ public class UsingProcessing extends PApplet {
 		}
 		if (complexity == 5){
 			creat = new RecursiveBacktracker();// set strategy for maze creation
-			size=7;
+			size=11;
 			allowedTimeForLevel = 25;
 		}
 		
 		if (complexity == 6){
-			creat = new HuntAndKill();// set strategy for maze creation
-			size=7;
+			creat = new RecursiveBacktracker();// set strategy for maze creation
+			size=13;
 			allowedTimeForLevel = 27;
 		}
 	
 		if (complexity == 7){
-			creat = new HuntAndKill();// set strategy for maze creation
-			size = 5;
+			creat = new RecursiveBacktracker();// set strategy for maze creation
+			size = 7;
 			allowedTimeForLevel = 15;
 		}
 		if (complexity == 8){
-			creat = new RecursiveBacktracker();// set strategy for maze creation
-			size=11;
+			creat = new HuntAndKill();// set strategy for maze creation
+			size=7;
 			allowedTimeForLevel = 15;
 		}
 		
@@ -105,19 +104,19 @@ public class UsingProcessing extends PApplet {
 		}
 		
 		if (complexity == 10){
-			creat = new RecursiveBacktracker();// set strategy for maze creation
-			size= 13;
+			creat = new Kruskal();// set strategy for maze creation
+			size= 11;
 			allowedTimeForLevel = 23;
 		}
 		if (complexity == 11){
-			creat = new Kruskal();// set strategy for maze creation
-			size=11;
+			creat = new RecursiveBacktracker();// set strategy for maze creation
+			size=15;
 			allowedTimeForLevel = 33;
 		}
 		
 		if (complexity == 12){
-			creat = new RecursiveBacktracker();// set strategy for maze creation
-			size=15;
+			creat = new HuntAndKill();// set strategy for maze creation
+			size=5;
 			allowedTimeForLevel = 14;
 		}
 	
@@ -134,7 +133,7 @@ public class UsingProcessing extends PApplet {
 	
 		if (complexity == 15){
 			creat = new HuntAndKill();// set strategy for maze creation
-			size = 13;
+			size = 11;
 			allowedTimeForLevel = 39;
 		}
 		
@@ -146,7 +145,7 @@ public class UsingProcessing extends PApplet {
 		
 		if (complexity == 17){
 			creat = new HuntAndKill();// set strategy for maze creation
-			size=11;
+			size=13;
 			allowedTimeForLevel = 35;
 		}
 	
@@ -401,488 +400,3 @@ public class UsingProcessing extends PApplet {
 		}
 	}
 	
-	
-	//game version only with RecursiveBacktracker
-		public void initializeAllRecursive(int complexity) {
-			goalReached = false;
-			
-			// set time to zero
-			time = new ControlTimer();
-			
-			float maxVel = 2.0f;
-			
-			if (complexity == 1){
-					creat = new RecursiveBacktracker();// set strategy for maze creation
-					size=5;
-					//allowedTimeForLevel = 20;
-					maxVel = 2.5f;
-					}
-			
-			if (complexity == 2){
-				creat = new RecursiveBacktracker();// set strategy for maze creation
-				size=5;
-				//allowedTimeForLevel = 20;
-				maxVel = 2.5f;
-				}
-			if (complexity == 3){
-				maxVel = 2.5f;
-				creat = new RecursiveBacktracker();// set strategy for maze creation
-				size=5;
-				//allowedTimeForLevel = 20;
-				}
-				
-			if (complexity == 4){
-					creat = new RecursiveBacktracker();// set strategy for maze creation
-					size=7;
-					maxVel = 2.2f;
-					//allowedTimeForLevel = 20;
-				}
-			if (complexity == 5){
-				maxVel = 2.2f;
-				creat = new RecursiveBacktracker();// set strategy for maze creation
-				size=7;
-				//allowedTimeForLevel = 20;
-				}
-				
-			if (complexity == 6){
-					creat = new RecursiveBacktracker();// set strategy for maze creation
-					size=7;
-					//allowedTimeForLevel = 20;
-					maxVel = 2.2f;
-				}
-			if (complexity == 7){
-					creat = new RecursiveBacktracker();// set strategy for maze creation
-					size=9;
-					//allowedTimeForLevel = 20;
-					maxVel = 2f;
-				}
-		
-			if (complexity == 8){
-					creat = new RecursiveBacktracker();// set strategy for maze creation
-					size=9;
-					maxVel = 2f;
-					//allowedTimeForLevel = 20;
-				}
-			
-			if (complexity == 9){
-					creat = new RecursiveBacktracker();// set strategy for maze creation
-					size=9;
-					maxVel = 2f;
-					//allowedTimeForLevel = 20;
-				}
-			
-			if (complexity == 10){
-					creat = new RecursiveBacktracker();// set strategy for maze creation
-					size=11;
-					maxVel = 1.95f;
-					//allowedTimeForLevel = 20;
-				}
-			
-			if (complexity == 11){
-					creat = new RecursiveBacktracker();// set strategy for maze creation
-					size=11;
-					maxVel = 1.95f;
-					//allowedTimeForLevel = 20;
-				}
-			
-			if (complexity == 12){
-					creat = new RecursiveBacktracker();// set strategy for maze creation
-					size=11;
-					maxVel = 1.95f;
-					//allowedTimeForLevel = 20;
-				}
-			
-			if (complexity == 13){
-					creat = new RecursiveBacktracker();// set strategy for maze creation
-					size=13;
-					maxVel = 1.85f;
-					//allowedTimeForLevel = 20;
-				}
-	
-			if (complexity == 14){
-					creat = new RecursiveBacktracker();// set strategy for maze creation
-					size=13;
-					maxVel = 1.85f;
-					//allowedTimeForLevel = 20;
-			}
-			if (complexity == 15){	
-					creat = new RecursiveBacktracker();// set strategy for maze creation
-					size=13;
-					maxVel = 1.85f;
-					//allowedTimeForLevel = 20;
-			}
-		
-			if (complexity == 16){
-					creat = new RecursiveBacktracker();// set strategy for maze creation
-					size=15;
-					//allowedTimeForLevel = 20;
-			}
-			
-			if (complexity == 17){
-					creat = new RecursiveBacktracker();// set strategy for maze creation
-					size=15;
-					maxVel = 1.75f;
-					//allowedTimeForLevel = 20;
-			}
-		
-			if (complexity == 18){
-					creat = new RecursiveBacktracker();// set strategy for maze creation
-					size=15;
-					maxVel = 1.75f;
-					//allowedTimeForLevel = 20;
-			}
-			if (complexity == 19) {
-				
-				fill(0);
-				stroke(20);
-				text("Thank you for playing", 250,250);
-				
-			}
-			
-			
-			
-			cellSize = 450 / size;
-			p = new Player(this, cellSize);// initialize player
-			p.setMaxVelocity(maxVel);
-			maze = new Maze(size,size, this, creat, cellSize); // initialize new maze grid
-			
-			startingIndex1 = 0;
-			startingIndex2 = ThreadLocalRandom.current().nextInt(0, maze.height);
-
-			// set end point -> goal
-			endIndex1 = size - 1;
-			endIndex2 = ThreadLocalRandom.current().nextInt(0, maze.height);
-
-			// create maze with initialized criteria
-			maze.creator.createMaze(maze.mazeFields[startingIndex1][startingIndex2],
-					maze.mazeFields[endIndex1][endIndex2]);
-				
-			// set startingPosition of player
-				p.setStartPosition(startingIndex1 * maze.cellSize + maze.cellSize / 3 + 2,
-						startingIndex2 * maze.cellSize + maze.cellSize / 2);
-
-			
-			}
-	
-		//game version only with Kruskal
-		public void initializeAllKruskal(int complexity) {
-			goalReached = false;
-
-			float maxVel = 2;
-			// set time to zero
-			time = new ControlTimer();
-			
-				
-		if (complexity == 1){
-				creat = new Kruskal();// set strategy for maze creation
-				size=5;
-				maxVel = 2.5f;
-				//allowedTimeForLevel = 20;
-				}
-		
-		if (complexity == 2){
-			creat = new Kruskal();// set strategy for maze creation
-			size=5;
-			//allowedTimeForLevel = 20;
-			maxVel = 2.5f;
-			}
-		if (complexity == 3){			
-			creat = new Kruskal();// set strategy for maze creation
-			size=5;
-			maxVel = 2.5f;
-			//allowedTimeForLevel = 20;
-			}
-			
-		if (complexity == 4){
-				creat = new Kruskal();// set strategy for maze creation
-				size=7;
-				//allowedTimeForLevel = 20;
-			}
-		if (complexity == 5){
-			maxVel = 2.2f;
-			creat = new Kruskal();// set strategy for maze creation
-			size=7;
-			//allowedTimeForLevel = 20;
-			}
-			
-		if (complexity == 6){
-				creat = new Kruskal();// set strategy for maze creation
-				size=7;
-				maxVel = 2.2f;
-				//allowedTimeForLevel = 20;
-			}
-		if (complexity == 7){
-				creat = new Kruskal();// set strategy for maze creation
-				size=9;
-				//allowedTimeForLevel = 20;
-			}
-	
-		if (complexity == 8){
-				creat = new Kruskal();// set strategy for maze creation
-				size=9;
-				maxVel = 2f;
-				//allowedTimeForLevel = 20;
-			}
-		
-		if (complexity == 9){
-				creat = new Kruskal();// set strategy for maze creation
-				size=9;
-				maxVel = 2f;
-				//allowedTimeForLevel = 20;
-			}
-		
-		if (complexity == 10){
-				creat = new Kruskal();// set strategy for maze creation
-				size=11;
-				maxVel = 1.95f;
-				//allowedTimeForLevel = 20;
-			}
-		
-		if (complexity == 11){
-				creat = new Kruskal();// set strategy for maze creation
-				size=11;
-				maxVel = 1.95f;
-				//allowedTimeForLevel = 20;
-			}
-		
-		if (complexity == 12){
-				creat = new Kruskal();// set strategy for maze creation
-				size=11;
-				maxVel = 1.95f;
-				//allowedTimeForLevel = 20;
-			}
-		
-		if (complexity == 13){
-				creat = new Kruskal();// set strategy for maze creation
-				size=13;
-				maxVel = 1.85f;
-				//allowedTimeForLevel = 20;
-			}
-
-		if (complexity == 14){
-				creat = new Kruskal();// set strategy for maze creation
-				size=13;
-				maxVel = 1.85f;
-				//allowedTimeForLevel = 20;
-		}
-		if (complexity == 15){	
-				creat = new Kruskal();// set strategy for maze creation
-				size=13;
-				maxVel = 1.85f;
-				//allowedTimeForLevel = 20;
-		}
-	
-		if (complexity == 16){
-				creat = new Kruskal();// set strategy for maze creation
-				size=15;
-				maxVel = 1.75f;
-				//allowedTimeForLevel = 20;
-		}
-		
-		if (complexity == 17){
-				creat = new Kruskal();// set strategy for maze creation
-				size=15;
-				maxVel = 1.75f;
-				//allowedTimeForLevel = 20;
-		}
-	
-		if (complexity == 18){
-				creat = new Kruskal();// set strategy for maze creation
-				size=15;
-				maxVel = 1.75f;
-				//allowedTimeForLevel = 20;
-		}
-		if (complexity == 19) {
-			
-			fill(0);
-			stroke(20);
-			text("Thank you for playing", 250,250);
-			
-		}
-			
-			cellSize = 450 / size;
-			p = new Player(this, cellSize);// initialize player
-			
-			p.setMaxVelocity(maxVel);
-			maze = new Maze(size,size, this, creat, cellSize); // initialize new maze grid
-			
-			startingIndex1 = 0;
-			startingIndex2 = ThreadLocalRandom.current().nextInt(0, maze.height);
-
-			// set end point -> goal
-			endIndex1 = size - 1;
-			endIndex2 = ThreadLocalRandom.current().nextInt(0, maze.height);
-
-			// create maze with initialized criteria
-			maze.creator.createMaze(maze.mazeFields[startingIndex1][startingIndex2],
-					maze.mazeFields[endIndex1][endIndex2]);
-				
-			// set startingPosition of player
-				p.setStartPosition(startingIndex1 * maze.cellSize + maze.cellSize / 3 + 2,
-						startingIndex2 * maze.cellSize + maze.cellSize / 2);
-
-			
-			}
-
-		// game version all HuntAndKill
-		public void initializeAllHuntAndKill(int complexity) {
-			goalReached = false;
-
-			float maxVel = 2.0f;
-			// set time to zero
-			time = new ControlTimer();
-			
-			
-			if (complexity == 1){
-				creat = new HuntAndKill();// set strategy for maze creation
-				size=5;
-				maxVel = 2.5f;
-				//allowedTimeForLevel = 20;
-				}
-		
-			if (complexity == 2){
-				creat = new HuntAndKill();// set strategy for maze creation
-				size=5;
-				maxVel = 2.5f;
-				//allowedTimeForLevel = 20;
-				}
-			if (complexity == 3){
-				maxVel = 2.5f;
-				creat = new HuntAndKill();// set strategy for maze creation
-				size=5;
-				//allowedTimeForLevel = 20;
-				}
-				
-			if (complexity == 4){
-					creat = new HuntAndKill();// set strategy for maze creation
-					size=7;
-					maxVel = 2.2f;
-					//allowedTimeForLevel = 20;
-				}
-			if (complexity == 5){
-				maxVel = 2.2f;
-				creat = new HuntAndKill();// set strategy for maze creation
-				size=7;
-				//allowedTimeForLevel = 20;
-				}
-				
-			if (complexity == 6){
-					creat = new HuntAndKill();// set strategy for maze creation
-					size=7;
-					maxVel = 2.2f;
-					//allowedTimeForLevel = 20;
-				}
-			if (complexity == 7){
-					creat = new HuntAndKill();// set strategy for maze creation
-					size=9;
-					maxVel = 2f;
-					//allowedTimeForLevel = 20;
-				}
-		
-			if (complexity == 8){
-					creat = new HuntAndKill();// set strategy for maze creation
-					size=9;
-					maxVel = 2f;
-					//allowedTimeForLevel = 20;
-				}
-			
-			if (complexity == 9){
-					creat = new HuntAndKill();// set strategy for maze creation
-					size=9;
-					maxVel = 2f;
-					//allowedTimeForLevel = 20;
-				}
-			
-			if (complexity == 10){
-					creat = new HuntAndKill();// set strategy for maze creation
-					size=11;
-					//allowedTimeForLevel = 20;
-				}
-			
-			if (complexity == 11){
-					creat = new HuntAndKill();// set strategy for maze creation
-					size=11;
-					maxVel = 1.95f;
-					//allowedTimeForLevel = 20;
-				}
-			
-			if (complexity == 12){
-					creat = new HuntAndKill();// set strategy for maze creation
-					size=11;
-					maxVel = 1.95f;
-					//allowedTimeForLevel = 20;
-				}
-			
-			if (complexity == 13){
-					creat = new HuntAndKill();// set strategy for maze creation
-					size=13;
-					maxVel = 1.85f;
-					//allowedTimeForLevel = 20;
-				}
-	
-			if (complexity == 14){
-					creat = new HuntAndKill();// set strategy for maze creation
-					size=13;
-					maxVel = 1.85f;
-					//allowedTimeForLevel = 20;
-				}
-			
-			if (complexity == 15){	
-					creat = new HuntAndKill();// set strategy for maze creation
-					size=13;
-					maxVel = 1.85f;
-					//allowedTimeForLevel = 20;
-				}
-		
-			if (complexity == 16){
-					creat = new HuntAndKill();// set strategy for maze creation
-					size=15;
-					maxVel = 1.75f;
-					//allowedTimeForLevel = 20;
-				}
-			
-			if (complexity == 17){
-					creat = new HuntAndKill();// set strategy for maze creation
-					size=15;
-					maxVel = 1.75f;
-					//allowedTimeForLevel = 20;
-				}
-		
-			if (complexity == 18){
-					creat = new HuntAndKill();// set strategy for maze creation
-					size=15;
-					maxVel = 1.75f;
-					//allowedTimeForLevel = 20;
-				}
-			
-			if (complexity == 19) {
-				
-				fill(0);
-				stroke(20);
-				text("Thank you for playing", 250,250);
-				}
-			
-			
-			cellSize = 450 / size;
-			p = new Player(this, cellSize);// initialize player
-			
-			p.setMaxVelocity(maxVel);
-			maze = new Maze(size,size, this, creat, cellSize); // initialize new maze grid
-			
-			startingIndex1 = 0;
-			startingIndex2 = ThreadLocalRandom.current().nextInt(0, maze.height);
-
-			// set end point -> goal
-			endIndex1 = size - 1;
-			endIndex2 = ThreadLocalRandom.current().nextInt(0, maze.height);
-
-			// create maze with initialized criteria
-			maze.creator.createMaze(maze.mazeFields[startingIndex1][startingIndex2],
-					maze.mazeFields[endIndex1][endIndex2]);
-				
-			// set startingPosition of player
-				p.setStartPosition(startingIndex1 * maze.cellSize + maze.cellSize / 3 +2,
-						startingIndex2 * maze.cellSize + maze.cellSize / 2);
-				
-			}
-}
