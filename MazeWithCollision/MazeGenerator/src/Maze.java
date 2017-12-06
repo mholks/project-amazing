@@ -1,8 +1,11 @@
 import processing.core.PApplet;
 
+/*WHAT DOES THAT DO?
+ * */
+
 public class Maze {
-	int width; //stores width of maze
-	int height; //stores height of maze
+	int width; //width of maze
+	int height; //height of maze
 	Cell[][] mazeFields; //array-field storing the cells within maze
 	Wall[][] verticalWalls; //array-field storing the vertical walls of the maze
 	Wall[][] horizontalWalls; //array-field storing the horizontal walls of the maze

@@ -2,7 +2,7 @@ import processing.core.*;
 import java.util.concurrent.ThreadLocalRandom;
 import controlP5.*;
 
-public class UsingProcessing extends PApplet {
+public class GameEngine extends PApplet {
 
 	boolean goalReached = false; // goal of the current level reached
 
@@ -195,7 +195,7 @@ public class UsingProcessing extends PApplet {
 
 
 	public static void main(String[] args) {
-		PApplet.main("UsingProcessing");
+		PApplet.main("GameEngine");
 	}
 
 	// set size of output window, P3D is used for enabling lightening effects
@@ -204,7 +204,7 @@ public class UsingProcessing extends PApplet {
 
 	}
 
-	// set up buttons
+	// set up buttons and place them on their initial position at the screen
 	public void setup() {
 		cp5 = new ControlP5(this);
 		startButton = new Bang(cp5, "Start");
