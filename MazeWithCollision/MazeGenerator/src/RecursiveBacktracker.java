@@ -17,7 +17,7 @@ public class RecursiveBacktracker extends RecursiveStrategy {
 	}
 	
 	Cell huntMode(ArrayList<Cell> neighbours,Cell current){
-		System.out.println("Dead End!");
+		System.out.println("Dead End!"); //debug
 		backTrackingStack.pop();
 		current=backTrackingStack.peek();
 		return current;

@@ -21,7 +21,9 @@ public class Player {
 		acceleration = 0.5f; //set acceleration
 		deceleration = 0.7f; //set deceleration
 		this.cellSize = cellSize;
-		radius = cellSize/3; //set radius
+		radius = cellSize/3; //set radius				
+		maxVelocity = 0.012f * cellSize + 1.4195f;
+
 		
 	}
 

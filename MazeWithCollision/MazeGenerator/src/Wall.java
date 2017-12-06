@@ -1,22 +1,22 @@
 import processing.core.PApplet;
 
 public class Wall {
-	int posX;
-	int posY;
-	boolean solid;
+	int posX; // x index of the wall 
+	int posY; // y index
+	boolean solid; //wall solid or passage
 	PApplet parent;
-	int wallWidth;
-	int wallHeight;
-	int cellSize;
+	int wallWidth; //width of wall
+	int wallHeight;//height of wall
+	int cellSize; //size of a cell
 	
 	public Wall(int widthPos, int heightPos, PApplet p, int w, int h, int cellS){
-		solid=true;
-		posX = widthPos;
+		solid=true; //wall is initialized as solid
+		posX = widthPos; //position of wall is passed by constructor
 		posY= heightPos;
 		parent = p;
-		wallWidth = w;
-		wallHeight = h;
-		cellSize = cellS;
+		wallWidth = w; //width is passed by constructor
+		wallHeight = h; //height is passed by constructor
+		cellSize = cellS; //size of a cell passed by constructor
 	}
 	
 	public String toString(){
