@@ -2,18 +2,18 @@ import processing.core.PApplet;
 import processing.core.*;
 
 public class Player {
-	PVector velocity; //player's velocity
-	float maxVelocity; //maximal possible velocity
-	PVector position; //position of the player in pixel
-	PApplet parent; //PApplet window for graphical output
-	public boolean up; //key control, up pressed
+	private PVector velocity; //player's velocity
+	private float maxVelocity; //maximal possible velocity
+	private PVector position; //position of the player in pixel
+	private PApplet parent; //PApplet window for graphical output
+	public  boolean up; //key control, up pressed
 	public boolean down; //key control, down pressed
 	public boolean right; //key control, right pressed
 	public boolean left; //key control, left pressed
-	float acceleration; 
-	float radius; //radius of player icon
-	float deceleration;
-	int cellSize;
+	private float acceleration; 
+	private float radius; //radius of player icon
+	private float deceleration;
+	private int cellSize;
 	
 	public Player(PApplet par, int cellSize) {
 		velocity = new PVector(0, 0); //set initial velocity to zero
@@ -122,6 +122,11 @@ public class Player {
 	    maxVelocity = f; 
 	  }
 	
-	
+	public float getPositionX(){
+		return position.x;
+	}
 
+	public float getPositionY(){
+		return position.y;
+	}
 }

@@ -3,13 +3,13 @@ import processing.core.PApplet;
 
 public class Cell {
 	private Status cellStatus; // enum consists of the two states: visited || unvisited
-	public int widthPosition; // cell's width position in the grid
-	public int heightPosition; // cell's height position in the grid
-	ArrayList<Cell> neighbours; //stores between two and four neighboring cells of the Cell
-	ArrayList<Cell> connectedCells; //array of cells to which the cell has a connecting path to
-	PApplet parent; //PApplet for processing window
-	int size; //size of a cell in pixels
-	Wall[] walls; //walls[0]: up; walls[1]: right; walls[2]:down; walls[3]:left
+	private int widthPosition; // cell's width position in the grid
+	private int heightPosition; // cell's height position in the grid
+	private ArrayList<Cell> neighbours; //stores between two and four neighboring cells of the Cell
+	private ArrayList<Cell> connectedCells; //array of cells to which the cell has a connecting path to
+	private PApplet parent; //PApplet for processing window
+	private int size; //size of a cell in pixels
+	private Wall[] walls; //walls[0]: up; walls[1]: right; walls[2]:down; walls[3]:left
 	
 	//constructor; arguments: position of cell, PApplet
 	public Cell(int width, int height, PApplet par, int newSize){
@@ -75,6 +75,10 @@ public class Cell {
 			}
 		}
 		
+	}
+	
+	public Wall[] getWalls(){
+		return walls;
 	}
 	
 	//setter-method, set all walls around cell

@@ -6,42 +6,42 @@ public class GameEngine extends PApplet {
 
 	boolean goalReached = false; // goal of the current level reached
 
-	int size = 5; // size of maze in cells
+	private int size = 5; // size of maze in cells
 
-	int cellSize = 450 / size; // size of one cell
+	private int cellSize = 450 / size; // size of one cell
 
-	MazeCreator creat = new RecursiveBacktracker(); // chosen maze creation
+	private MazeCreator creat = new RecursiveBacktracker(); // chosen maze creation
 													// strategy
 
-	Player p = new Player(this, cellSize); // initialize player
+	private Player p = new Player(this, cellSize); // initialize player
 
-	Maze maze = new Maze(size, size, this, creat, cellSize); // initialize new
+	private Maze maze = new Maze(size, size, this, creat, cellSize); // initialize new
 																// maze
 
-	int allowedTimeForLevel = 20;
+	private int allowedTimeForLevel = 20;
 	
-	ControlP5 cp5; // library for buttons and timer
+	private ControlP5 cp5; // library for buttons and timer
 
-	Bang startButton; // button to start game
-	boolean started = false; // has game been started
+	private Bang startButton; // button to start game
+	private boolean started = false; // has game been started
 
-	Bang continueButton; // button to continue game
-	Bang pauseButton; // button to pause game
-	boolean paused = false; // is game paused
+	private Bang continueButton; // button to continue game
+	private Bang pauseButton; // button to pause game
+	private boolean paused = false; // is game paused
 
-	int timeOnPause = 0; // how long was game paused
+	private int timeOnPause = 0; // how long was game paused
 
-	ControlTimer time = new ControlTimer();
+	private ControlTimer time = new ControlTimer();
 
 	// set starting cell for maze creation
-	int startingIndex1 = 0;
-	int startingIndex2 = ThreadLocalRandom.current().nextInt(0, maze.height);;
+	private int startingIndex1 = 0;
+	private int startingIndex2 = ThreadLocalRandom.current().nextInt(0, maze.getHeight());;
 
 	// set end point -> goal
-	int endIndex1 = size - 1;
-	int endIndex2 = ThreadLocalRandom.current().nextInt(0, maze.height);
+	private int endIndex1 = size - 1;
+	private int endIndex2 = ThreadLocalRandom.current().nextInt(0, maze.getHeight());
 
-	int complexityClass = 12;
+	private int complexityClass = 12;
 	
 	// create a new maze and set player to its start
 	public void initializeNewMaze(int complexity) {
@@ -179,17 +179,17 @@ public class GameEngine extends PApplet {
 		maze = new Maze(size,size, this, creat, cellSize); // initialize new maze grid
 		
 		startingIndex1 = 0;
-		startingIndex2 = ThreadLocalRandom.current().nextInt(0, maze.height);
+		startingIndex2 = ThreadLocalRandom.current().nextInt(0, maze.getHeight());
 		// set end point -> goal
 		endIndex1 = size - 1;
-		endIndex2 = ThreadLocalRandom.current().nextInt(0, maze.height);
+		endIndex2 = ThreadLocalRandom.current().nextInt(0, maze.getHeight());
 		// create maze with initialized criteria
 		maze.creator.createMaze(maze.mazeFields[startingIndex1][startingIndex2],
 				maze.mazeFields[endIndex1][endIndex2]);
 			
 		// set startingPosition of player
-			p.setStartPosition(startingIndex1 * maze.cellSize + maze.cellSize / 3 + 2,
-					startingIndex2 * maze.cellSize + maze.cellSize / 2);
+			p.setStartPosition(startingIndex1 * maze.getCellSize() + maze.getCellSize() / 3 + 2,
+					startingIndex2 * maze.getCellSize() + maze.getCellSize() / 2);
 		
 		} 
 
@@ -320,7 +320,7 @@ public class GameEngine extends PApplet {
 					// spotlight following player
 					spotLight(255.0f, 255.0f, 255.0f, // color of the spotlight
 														// in RGB
-							p.position.x, p.position.y, 1000, // position of
+							p.getPositionX(), p.getPositionY(), 1000, // position of
 																// spotlight
 																// (follows
 																// player

@@ -57,7 +57,8 @@ public abstract class RecursiveStrategy implements MazeCreator {
 				current = handleCases(neighbourList, current);
 		}
 		
-		endpoint.walls[1].setPath();
+		Wall[] wallsOfGoalCell = endpoint.getWalls();
+		wallsOfGoalCell[1].setPath();
 
 	}
 	

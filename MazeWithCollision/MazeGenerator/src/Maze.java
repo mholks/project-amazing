@@ -4,14 +4,14 @@ import processing.core.PApplet;
  * */
 
 public class Maze {
-	int width; //width of maze
-	int height; //height of maze
+	private int width; //width of maze
+	private int height; //height of maze
 	Cell[][] mazeFields; //array-field storing the cells within maze
 	Wall[][] verticalWalls; //array-field storing the vertical walls of the maze
 	Wall[][] horizontalWalls; //array-field storing the horizontal walls of the maze
 	MazeCreator creator; //instance of interface mazeCreator
-	PApplet parent; //PApplet for processing window
-	int cellSize; // size of one cell
+	private PApplet parent; //PApplet for processing window
+	private int cellSize; // size of one cell
 	
 	public Maze(int wid, int hei, PApplet par, MazeCreator mazeCreator, int cSize){
 		this.width=wid; //width of maze is set
@@ -96,7 +96,14 @@ public class Maze {
 				}
 		}
 	}
+	
+	public int getHeight(){
+		return height;
+	}
 		
+	public int getCellSize(){
+		return cellSize;
+	}
 }
 
 		

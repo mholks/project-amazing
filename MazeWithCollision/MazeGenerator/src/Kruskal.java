@@ -6,10 +6,10 @@ import java.util.Stack;
 public class Kruskal implements MazeCreator {
 	
 	//stack of all edges between the cells, edge is defined as a set including the cell "from" and the cell "to"
-	Stack<Set<Cell>> allEdges;
+	private Stack<Set<Cell>> allEdges;
 	
 	//the set saves sets that include cells
-	Set<Set<Cell>> setsOfCells;
+	private Set<Set<Cell>> setsOfCells;
 	
 	public void setUpStructure(Cell[][] mazeFields){
 		allEdges = new Stack<Set<Cell>>();
@@ -95,8 +95,10 @@ public class Kruskal implements MazeCreator {
 				//set the shared wall to unsolid
 				for(int i = 0; i<4; i++){
 					for(int j=0;j<4;j++){
-						if(contents[0].walls[i].equals(contents[1].walls[j])){
-							contents[0].walls[i].setPath();
+						Wall[] wallsCellOne = contents[0].getWalls();
+						Wall[] wallsCellTwo = contents[1].getWalls();
+						if(wallsCellOne[i].equals(wallsCellTwo[j])){
+							wallsCellOne[i].setPath();
 						}
 					}
 				}
@@ -115,7 +117,8 @@ public class Kruskal implements MazeCreator {
 				System.out.println("Combined sets " + firstSet.toString() + " and " + secondSet.toString());
 			}
 		}
-		endpoint.walls[1].setPath();
+		Wall[] wallsOfGoalCell = endpoint.getWalls();
+		wallsOfGoalCell[1].setPath();
 	}
 
 }
