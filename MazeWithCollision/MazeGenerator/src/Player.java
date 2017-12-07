@@ -18,12 +18,11 @@ public class Player {
 	public Player(PApplet par, int cellSize) {
 		velocity = new PVector(0, 0); //set initial velocity to zero
 		parent = par; //connect PApplet
-		acceleration = 0.5f; //set acceleration
-		deceleration = 0.7f; //set deceleration
 		this.cellSize = cellSize;
 		radius = cellSize/3; //set radius				
 		maxVelocity = 0.012f * cellSize + 1.4195f;
-
+		acceleration = 0.5f; //set acceleration
+		deceleration = 0.7f; //set deceleration
 		
 	}
 
@@ -69,16 +68,16 @@ public class Player {
 		void collisionHorizontal(Wall wall){
 			if (wall.solid) {
 				if(velocity.y>0){
-					if (position.y + radius >= wall.posY * cellSize && position.y < wall.posY * cellSize + wall.wallHeight) {
-						if(position.x > wall.posX*cellSize && position.x < wall.posX *cellSize + wall.wallWidth) {
-							position.y = wall.posY * cellSize + wall.wallHeight-radius;
+					if (position.y + radius >= wall.posY && position.y < wall.posY+ wall.wallHeight) {
+						if(position.x > wall.posX && position.x < wall.posX  + wall.wallWidth) {
+							position.y = wall.posY  + wall.wallHeight-radius;
 						}
 					}
 				}
 				if(velocity.y<0){
-					if (position.y - radius >= wall.posY * cellSize && position.y <= wall.posY * cellSize + wall.wallHeight + radius) {
-						if(position.x > wall.posX*cellSize && position.x < wall.posX *cellSize + wall.wallWidth) {
-							position.y = wall.posY * cellSize + wall.wallHeight + radius+2;
+					if (position.y - radius >= wall.posY && position.y <= wall.posY  + wall.wallHeight + radius) {
+						if(position.x > wall.posX && position.x < wall.posX  + wall.wallWidth) {
+							position.y = wall.posY  + wall.wallHeight + radius+2;
 						}
 					}
 				}
@@ -89,31 +88,35 @@ public class Player {
 		void collisionVertical(Wall wall) {
 			if (wall.solid) {
 				if(velocity.x>0){
-					if (position.x + radius >= wall.posX * cellSize && position.x < wall.posX * cellSize + wall.wallWidth) {
-						if(position.y > wall.posY*cellSize && position.y < wall.posY *cellSize + wall.wallHeight) {
-							position.x = wall.posX * cellSize + wall.wallWidth-radius;
+					if (position.x + radius >= wall.posX && position.x < wall.posX + wall.wallWidth) {
+						if(position.y > wall.posY&& position.y < wall.posY  + wall.wallHeight) {
+							position.x = wall.posX  + wall.wallWidth-radius;
 						}
 					}
 				}
 				if(velocity.x<0){
-					if (position.x - radius >= wall.posX * cellSize && position.x <= wall.posX * cellSize + wall.wallWidth + radius) {
-						if(position.y > wall.posY*cellSize && position.y < wall.posY *cellSize + wall.wallHeight) {
-							position.x = wall.posX * cellSize + wall.wallWidth + radius+2;
+					if (position.x - radius >= wall.posX  && position.x <= wall.posX  + wall.wallWidth + radius) {
+						if(position.y > wall.posY && position.y < wall.posY  + wall.wallHeight) {
+							position.x = wall.posX  + wall.wallWidth + radius+2;
 						}
 					}
 				}
 			}
-
 		}
 	
 	//check whether player escaped the maze
 	public boolean goalReached(int size){
+		
 		if(position.x>size+10|| position.y>size+10){
+			parent.fill(0,255,0);
+			parent.rect(0,0,200,200);
+			
 			return true;
 		}
 		else{
 			return false;
 		}
+		
 	}
 	
 	//set maximum velocity of player

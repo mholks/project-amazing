@@ -9,13 +9,21 @@ public class Wall {
 	int wallHeight;//height of wall
 	int cellSize; //size of a cell
 	
-	public Wall(int widthPos, int heightPos, PApplet p, int w, int h, int cellS){
+	public Wall(int widthPos, int heightPos, PApplet p, boolean horizontal, int cellS){
 		solid=true; //wall is initialized as solid
 		posX = widthPos; //position of wall is passed by constructor
 		posY= heightPos;
 		parent = p;
-		wallWidth = w; //width is passed by constructor
-		wallHeight = h; //height is passed by constructor
+		if(horizontal){
+		wallWidth = cellS; //width is passed by constructor
+		wallHeight = cellS/8; //height is passed by constructor
+		posY = posY - cellS/8;
+		}
+		else{
+		wallWidth = cellS/8; //width is passed by constructor
+		wallHeight = cellS; //height is passed by constructor
+		posX=posX-cellS/8;
+		}
 		cellSize = cellS; //size of a cell passed by constructor
 	}
 	
@@ -31,6 +39,6 @@ public class Wall {
 	public void printWall(){
 		parent.stroke(0,0,0);
 		parent.fill(0,255,0);
-		parent.rect(posX*cellSize,posY*cellSize,wallWidth,wallHeight);
+		parent.rect(posX,posY,wallWidth,wallHeight);
 	}
 }

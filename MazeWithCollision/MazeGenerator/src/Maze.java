@@ -25,7 +25,7 @@ public class Maze {
 	//fill Array with horizontal Wall-elements
 		for(int i=0; i<width;i++){
 			for(int j=0; j<height+1;j++){
-				horizontalWalls[i][j]=new Wall(i,j,parent,cellSize,4,cellSize); //calls constructor of class Wall
+				horizontalWalls[i][j]=new Wall(i*cellSize,j*cellSize,parent,true,cellSize); //calls constructor of class Wall
 			}
 		}
 	
@@ -33,7 +33,7 @@ public class Maze {
 	//fill Array with vertical Wall-elements
 		for(int i =0; i<width+1;i++){
 			for(int j=0; j<height;j++){
-				verticalWalls[i][j]=new Wall(i,j,parent,4,cellSize,cellSize); //calls constructor of class Wall
+				verticalWalls[i][j]=new Wall(i*cellSize,j*cellSize,parent,false,cellSize); //calls constructor of class Wall
 			}
 		}
 			
