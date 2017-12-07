@@ -22,7 +22,7 @@
 		}
 		
 		public Cell huntMode(ArrayList<Cell> neighbours, Cell current){
-			System.out.println("Dead End! Moving into hunting mode");
+			//System.out.println("Dead End! Moving into hunting mode");
 			
 			mainLoop:
 				

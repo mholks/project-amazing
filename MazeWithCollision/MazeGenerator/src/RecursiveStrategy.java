@@ -37,18 +37,18 @@ public abstract class RecursiveStrategy implements MazeCreator {
 		//loop as long as there are unvisited cells
 		while(!unvisitedCells.isEmpty()) { 
 			
-			System.out.println("Position: " + current.toString());
+			//System.out.println("Position: " + current.toString());
 				
 				//find the neighbours of the cell
 				ArrayList<Cell> neighbourList = new ArrayList<Cell>();
 				
 				neighbourList=current.getNeighbours();
-				System.out.println("Found following neighbours: " + neighbourList.toString());
+				//System.out.println("Found following neighbours: " + neighbourList.toString());
 				
 				//remove neighbors that have already been visited
 				for(int i=0; i<neighbourList.size();i++){ 
 					if(!unvisitedCells.contains(neighbourList.get(i))){
-						System.out.println("Deleting: " + neighbourList.get(i) + " from neighbourList");
+						//System.out.println("Deleting: " + neighbourList.get(i) + " from neighbourList");
 						neighbourList.remove(i);
 						i--;
 					}
@@ -75,7 +75,7 @@ public abstract class RecursiveStrategy implements MazeCreator {
 		temp.addConnection(current);
 		current.addConnection(temp);
 					
-		System.out.println("I connected cell " + temp.toString() + " with cell " + current.toString());
+		//System.out.println("I connected cell " + temp.toString() + " with cell " + current.toString());
 		
 		//set status of current cell to visited
 		current.setStatus(Status.VISITED); 

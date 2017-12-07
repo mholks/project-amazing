@@ -104,7 +104,7 @@ public class Kruskal implements MazeCreator {
 				}
 				
 				//debugging
-				System.out.println("Connected cell " + contents[1].toString() + " and " + contents[0].toString());
+				//System.out.println("Connected cell " + contents[1].toString() + " and " + contents[0].toString());
 				
 				//remove the two seperate cells from setsOfCells
 				setsOfCells.remove(secondSet);
@@ -114,7 +114,7 @@ public class Kruskal implements MazeCreator {
 				setsOfCells.add(combinedSet);
 				
 				//debugging
-				System.out.println("Combined sets " + firstSet.toString() + " and " + secondSet.toString());
+				//System.out.println("Combined sets " + firstSet.toString() + " and " + secondSet.toString());
 			}
 		}
 		Wall[] wallsOfGoalCell = endpoint.getWalls();

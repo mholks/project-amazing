@@ -7,7 +7,11 @@ public class GameEngine extends PApplet {
 	boolean goalReached = false; // goal of the current level reached
 
 	private int size = 5; // size of maze in cells
-
+	private int width = 1200;
+	private int height = 900;
+	private int gameSize = 890;
+	
+	
 	private int cellSize = 450 / size; // size of one cell
 
 	private MazeCreator creat = new RecursiveBacktracker(); // chosen maze creation
@@ -173,7 +177,7 @@ public class GameEngine extends PApplet {
 		}
 		
 		
-		cellSize = 450 / size;
+		cellSize = gameSize / size;
 		p = new Player(this, cellSize);// initialize player
 		
 		maze = new Maze(size,size, this, creat, cellSize); // initialize new maze grid
@@ -200,15 +204,16 @@ public class GameEngine extends PApplet {
 
 	// set size of output window, P3D is used for enabling lightening effects
 	public void settings() {
-		size(600, 600, P3D);
+		size(width, height, P3D);
 
 	}
 
 	// set up buttons and place them on their initial position at the screen
 	public void setup() {
+		background(0);
 		cp5 = new ControlP5(this);
 		startButton = new Bang(cp5, "Start");
-		startButton.setPosition(300, 300).setSize(60, 60);
+		startButton.setPosition(width/2-64, height/2-32).setSize(128, 64);
 		continueButton = new Bang(cp5, "Continue");
 		continueButton.setPosition(-20, -20).setSize(5, 5);
 		pauseButton = new Bang(cp5, "Pause");
@@ -242,16 +247,16 @@ public class GameEngine extends PApplet {
 
 	// process key press to move player
 	public void keyPressed() {
-		if (key == 'd' || key == 'D') {
+		if (key == 'd' || key == 'D' || key == RIGHT) {
 			p.right = true;
 		}
-		if (key == 's' || key == 'S') {
+		if (key == 's' || key == 'S'|| key == DOWN) {
 			p.down = true;
 		}
-		if (key == 'a' || key == 'A') {
+		if (key == 'a' || key == 'A'|| key == LEFT) {
 			p.left = true;
 		}
-		if (key == 'w' || key == 'W') {
+		if (key == 'w' || key == 'W' || key == RIGHT) {
 			p.up = true;
 		}
 		p.move();
@@ -276,60 +281,97 @@ public class GameEngine extends PApplet {
 
 	// draw on output screen
 	public void draw() {
-		fill(0);
-		rect(0, 0, 600, 600);
 
+		
 		// if paused, show pause screen
 		if (paused) {
 			time = new ControlTimer();
-			rect(0, 0, 600, 600);
-			continueButton.setPosition(300, 300).setSize(60, 60);
+
+			fill(0);
+			rect(0, 0, gameSize, gameSize);
+			fill(255,0,0);
+			textSize(76);
+			text("PAUSED", gameSize/2-116,gameSize/2-150);
+			continueButton.setPosition(gameSize/2-75, gameSize/2-80).setSize(150, 80);
+
 		}
 
 		else {
-
+			
 			// when game is started
 			if (started) {
+				
+				fill(255);
+				rect(gameSize,0,gameSize-width,height);
+				
 
 				cp5.remove("Start"); // remove start button
 
 				// if goal is not reached yet
 				if (!(goalReached)) {
+					fill(255);
+					rect(gameSize,0,300,height);
+					
+
 					
 					fill(255, 255, 255);
 					
 					textSize(20);
 					text(complexityClass, 500,500);
-
+					
 					// show counting time in minutes and seconds
-					text(Math.round(time.time() / 1000 / 60 - timeOnPause)// minutes
-							+ ":" + Math.round((time.time() / 1000) % 60 - timeOnPause), 500, 20);// seconds
+					textSize(32);
+					fill(0);
+					
+					
 
-				// spotlight on pause button
-					spotLight(255.0f, 255.0f, 255.0f, // color of the spotlight
-														// in RGB
-							280, 580, 1000, // position of spotlight (follows
-											// player position)
-							0, 0, -1, // direction in which the light point
-							PI / 2, // angle of the light
-							600); // concentration of the light 
+					
+					
+					int levelTimer = Math.round((time.time() / 1000) % 60 - timeOnPause);
+					int maxBarTimer = 500;
+					int barTimer = maxBarTimer/allowedTimeForLevel;
+					int timer = barTimer*levelTimer;
+
+					if (levelTimer < allowedTimeForLevel)
+					{
+					text(allowedTimeForLevel-levelTimer,950,350);
+					fill(0,255,0);
+					rect(1042,100+barTimer+timer,64, maxBarTimer-(timer));
+					}
+					else
+					{
+						text("Try again!",1000,350);
+					}
+				
 
 					// view pause button
-					pauseButton.setPosition(250, 540).setSize(60, 40);
+					pauseButton.setPosition(1000, 700).setSize(150, 80);
+					
+					
+					
+					spotLight(255.0f, 255.0f, 255.0f, // color of the spotlight
+							// in RGB
+					1075, 740, 1000, // position of
+					0, 0, -1, // direction in which the light point
+					PI / 2, // angle of the light
+					400); // concentration of the light
+					
+
 
 					// spotlight following player
 					spotLight(255.0f, 255.0f, 255.0f, // color of the spotlight
 														// in RGB
 							p.getPositionX(), p.getPositionY(), 1000, // position of
-																// spotlight
-																// (follows
-																// player
-																// position)
+																		// spotlight
+																		// (follows
+																		// player
+																		// position)
 							0, 0, -1, // direction in which the light point
 							PI / 2, // angle of the light
-							600); // concentration of the light
+							300); // concentration of the light
 
 					// display maze
+					
 
 					fill(255, 255, 255);
 					stroke(255, 255, 255);
@@ -339,12 +381,16 @@ public class GameEngine extends PApplet {
 					rect((endIndex1+1)*cellSize,endIndex2*cellSize,4,cellSize);
 					
 					// print starting point
-					fill(255, 0, 0);
+					//fill(255, 0, 0);
+					
 					triangle(startingIndex1, // edge 1
 							startingIndex2 * cellSize, startingIndex1, // edge 2
 							startingIndex2 * cellSize + cellSize - 2, startingIndex1 + cellSize - 5, // edge
 																										// 3
 							startingIndex2 * cellSize + cellSize / 2);
+					fill(255);
+					textSize(cellSize/3);
+					text("Start", startingIndex1+cellSize/8,startingIndex2 * cellSize+cellSize/2);
 
 					// print end point
 					fill(0, 255, 0);
@@ -352,6 +398,10 @@ public class GameEngine extends PApplet {
 							endIndex2 * cellSize + cellSize - 2,
 
 							endIndex1 * cellSize + cellSize - 5, endIndex2 * cellSize + cellSize / 2);
+					textSize(cellSize/3);
+					fill(255);
+					text("Exit", endIndex1*cellSize+cellSize/8,endIndex2 * cellSize+cellSize/2);
+					textSize(12);//Placeholder
 
 					// check for collision with horizontal walls
 					for (int i = 0; i < maze.horizontalWalls.length; i++) {
@@ -375,8 +425,13 @@ public class GameEngine extends PApplet {
 
 					// draw player on current position
 					p.drawPlayer();
+					
+
 
 					goalReached = p.goalReached(size * cellSize);
+					rect(gameSize,0,20,height);
+					
+					
 				}
 
 				// if goal is reached, initialize new maze
@@ -385,6 +440,7 @@ public class GameEngine extends PApplet {
 					int neededTime = Math.round((time.time() / 1000)); // time player needed
 																		// to finish level
 					
+					System.out.println("Completed level: " + complexityClass + " in " + neededTime + " seconds.");
 					// in case player needs more than X seconds, next level should be more
 					// difficult
 					if (neededTime > allowedTimeForLevel && complexityClass>1) {

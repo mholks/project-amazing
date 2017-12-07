@@ -38,7 +38,7 @@ public class Cell {
 		cellStatus=newstate;
 		
 		//DEBUG
-		System.out.println("Set status of cell " + this.toString() + " to " + newstate);
+		//System.out.println("Set status of cell " + this.toString() + " to " + newstate);
 		
 		}
 	
