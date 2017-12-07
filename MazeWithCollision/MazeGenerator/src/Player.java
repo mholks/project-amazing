@@ -13,17 +13,14 @@ public class Player {
 	private float acceleration; 
 	private float radius; //radius of player icon
 	private float deceleration;
-	private int cellSize;
 	
 	public Player(PApplet par, int cellSize) {
 		velocity = new PVector(0, 0); //set initial velocity to zero
 		parent = par; //connect PApplet
-		this.cellSize = cellSize;
 		radius = cellSize/3; //set radius				
 		maxVelocity = 0.012f * cellSize + 1.4195f;
 		acceleration = 0.5f; //set acceleration
-		deceleration = 0.7f; //set deceleration
-		
+		deceleration = 0.7f; //set deceleration		
 	}
 
 	//set initial position of player in pixel
