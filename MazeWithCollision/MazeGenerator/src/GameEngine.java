@@ -407,6 +407,10 @@ public class GameEngine extends PApplet {
           int neededTime = Math.round((time.time() / 1000)); // time player needed
                                     // to finish level
           
+          System.out.println("Completed level: "
+          + complexityClass + " in "
+        		  + neededTime +
+        		  " seconds (av.: " + allowedTimeForLevel + ")");
           // in case player needs more than X seconds, next level should be more
           // difficult
           if (neededTime > allowedTimeForLevel && complexityClass>1) {
