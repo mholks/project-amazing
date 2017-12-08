@@ -6,10 +6,10 @@ import processing.core.PApplet;
 public class Maze {
 	private int width; //width of maze
 	private int height; //height of maze
-	Cell[][] mazeFields; //array-field storing the cells within maze
-	Wall[][] verticalWalls; //array-field storing the vertical walls of the maze
-	Wall[][] horizontalWalls; //array-field storing the horizontal walls of the maze
-	MazeCreator creator; //instance of interface mazeCreator
+	private Cell[][] mazeFields; //array-field storing the cells within maze
+	private Wall[][] verticalWalls; //array-field storing the vertical walls of the maze
+	private Wall[][] horizontalWalls; //array-field storing the horizontal walls of the maze
+	private MazeCreator creator; //instance of interface mazeCreator
 	private PApplet parent; //PApplet for processing window
 	private int cellSize; // size of one cell
 	
@@ -28,7 +28,6 @@ public class Maze {
 				horizontalWalls[i][j]=new Wall(i*cellSize,j*cellSize,parent,true,cellSize); //calls constructor of class Wall
 			}
 		}
-	
 		
 	//fill Array with vertical Wall-elements
 		for(int i =0; i<width+1;i++){
@@ -103,6 +102,22 @@ public class Maze {
 		
 	public int getCellSize(){
 		return cellSize;
+	}
+	
+	public Cell getCell(int widthPos, int heightPos){
+		return mazeFields[widthPos][heightPos];
+	}
+	
+	public Wall[][] getVerticalWalls(){
+		return verticalWalls;
+	}
+	
+	public Wall[][] getHorizontalWalls(){
+		return horizontalWalls;
+	}
+	
+	public MazeCreator getMazeCreator(){
+		return creator;
 	}
 }
 

@@ -197,8 +197,7 @@ public class GameEngine extends PApplet {
     endIndex1 = size - 1;
     endIndex2 = ThreadLocalRandom.current().nextInt(0, maze.getHeight());
     // create maze with initialized criteria
-    maze.creator.createMaze(maze.mazeFields[startingIndex1][startingIndex2],
-        maze.mazeFields[endIndex1][endIndex2]);
+    maze.getMazeCreator().createMaze(maze.getCell(startingIndex1,startingIndex2),maze.getCell(endIndex1,endIndex2));
       
     // set startingPosition of player
       p.setStartPosition(startingIndex1 * maze.getCellSize() + maze.getCellSize() / 3 + 2,
@@ -362,22 +361,21 @@ public class GameEngine extends PApplet {
               endIndex2 * cellSize + cellSize - 2,
 
               endIndex1 * cellSize + cellSize - 5, endIndex2 * cellSize + cellSize / 2);
-
+        
           // check for collision with horizontal walls
-          for (int i = 0; i < maze.horizontalWalls.length; i++) {
-            for (int j = 0; j < maze.horizontalWalls[0].length; j++) {
-              p.collisionHorizontal(maze.horizontalWalls[i][j]);
-
+          Wall[][] horizontalWalls = maze.getHorizontalWalls();
+          for (int i = 0; i < horizontalWalls.length; i++) {
+            for (int j = 0; j < horizontalWalls[0].length; j++) {
+              p.collisionHorizontal(horizontalWalls[i][j]);
             }
-
           }
 
           // check for collision with vertical walls
-          for (int i = 0; i < maze.verticalWalls.length; i++) {
-            for (int j = 0; j < maze.verticalWalls[0].length; j++) {
-              p.collisionVertical(maze.verticalWalls[i][j]);
+          Wall[][] verticalWalls = maze.getVerticalWalls();
+          for (int i = 0; i < verticalWalls.length; i++) {
+            for (int j = 0; j < verticalWalls[0].length; j++) {
+              p.collisionVertical(verticalWalls[i][j]);
             }
-
           }
 
           // move player
