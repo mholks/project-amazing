@@ -72,15 +72,12 @@ public class Cell {
 		walls[0]=up;
 		walls[1]=right;
 		walls[3]=left;
-		walls[2]=down;
-		
+		walls[2]=down;		
 	}
 		
 	//DEBUG overriding default toString-method
 	public String toString(){
 		return "[" + widthPosition + "][" + heightPosition + "]";
 	}
-	
-
 	}
 	

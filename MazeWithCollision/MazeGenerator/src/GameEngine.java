@@ -434,8 +434,8 @@ public class GameEngine extends PApplet {
 			fill(255,0,0);
 		}
 		text(allowedTimeForLevel-levelTimer,displayWidth/2,displayHeight-displayHeight/20);
-		
   }
+  
   public void drawStatistics()
   {
 	  int currentLevel = complexityClass;
@@ -447,9 +447,7 @@ public class GameEngine extends PApplet {
 		  highestLevel = currentLevel;
 	  }
 	  
-	  text("Highest level achieved : " + highestLevel,displayWidth-displayWidth/5,displayHeight/4);
-	  
-	  
+	  text("Highest level achieved : " + highestLevel,displayWidth-displayWidth/5,displayHeight/4);	  
   }
   
 }

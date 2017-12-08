@@ -117,5 +117,4 @@ public class Kruskal implements MazeCreator {
 		Wall[] wallsOfGoalCell = endpoint.getWalls();
 		wallsOfGoalCell[1].setPath();
 	}
-
 }
