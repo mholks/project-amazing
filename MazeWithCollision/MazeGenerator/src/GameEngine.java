@@ -353,8 +353,7 @@ public class GameEngine extends PApplet {
           fill(255, 0, 0);
           triangle(startingIndex1, // edge 1
               startingIndex2 * cellSize, startingIndex1, // edge 2
-              startingIndex2 * cellSize + cellSize - 2, startingIndex1 + cellSize - 5, // edge
-                                                    // 3
+              startingIndex2 * cellSize + cellSize - 2, startingIndex1 + cellSize - 5, // edge3
               startingIndex2 * cellSize + cellSize / 2);
 
           // print end point

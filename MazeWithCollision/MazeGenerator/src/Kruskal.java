@@ -3,6 +3,9 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
 
+/** This class implements the Kruskal algorithm for creating mazes 
+  */
+ 
 public class Kruskal implements MazeCreator {
 	
 	//stack of all edges between the cells, edge is defined as a set including the cell "from" and the cell "to"
@@ -11,6 +14,7 @@ public class Kruskal implements MazeCreator {
 	//the set saves sets that include cells
 	private Set<Set<Cell>> setsOfCells;
 	
+	//creates the initial structure necessary for running the algorithm
 	public void setUpStructure(Cell[][] mazeFields){
 		allEdges = new Stack<Set<Cell>>();
 		setsOfCells = new HashSet<Set<Cell>>();
@@ -23,7 +27,7 @@ public class Kruskal implements MazeCreator {
 				Set<Cell> cellSet = new HashSet<Cell>();
 				cellSet.add(mazeFields[i][j]);
 				
-				//by default setsOfCells contains every Cell in a separate set
+				//by default setsOfCells contains every cell in a separate set
 				setsOfCells.add(cellSet);
 				
 				//find the neighbours of the cell
@@ -44,10 +48,10 @@ public class Kruskal implements MazeCreator {
 		Collections.shuffle(allEdges);
 	}
 
-	
+	//implementation of the Kruskal algorithm
 	public void createMaze(Cell startingField, Cell endpoint){
 		
-		//go over all edges
+		//do for all edges
 		while(!allEdges.empty()){
 			
 			//select first edge
@@ -56,13 +60,11 @@ public class Kruskal implements MazeCreator {
 			//pop edge from stack
 			allEdges.pop();
 			
-			
-			Cell[] contents = new Cell[2];
-			
 			//saves the two cells in edge into Array
+			Cell[] contents = new Cell[2];
 			contents = current.toArray(contents);
 			
-			//temporary variable to save the sets in which the Cells can be currently found
+			//temporary variable to save the sets in which the cells can be currently found
 			Set<Cell> firstSet = new HashSet<Cell>();
 			Set<Cell> secondSet = new HashSet<Cell>();
 			
@@ -91,7 +93,6 @@ public class Kruskal implements MazeCreator {
 				
 				//set the connection between the cells in the cell objects
 				contents[0].addConnection(contents[1]);
-				contents[1].addConnection(contents[0]);
 				
 				//set the shared wall to unsolid
 				for(int i = 0; i<4; i++){
@@ -102,22 +103,17 @@ public class Kruskal implements MazeCreator {
 							wallsCellOne[i].setPath();
 						}
 					}
-				}
-				
-				//debugging
-				//System.out.println("Connected cell " + contents[1].toString() + " and " + contents[0].toString());
-				
+				}			
 				//remove the two separate cells from setsOfCells
 				setsOfCells.remove(secondSet);
 				setsOfCells.remove(firstSet);
 				
 				//add the combined set to setsOfCells
 				setsOfCells.add(combinedSet);
-				
-				//debugging
-				//System.out.println("Combined sets " + firstSet.toString() + " and " + secondSet.toString());
 			}
 		}
+		
+		//set the exit wall to unsolid
 		Wall[] wallsOfGoalCell = endpoint.getWalls();
 		wallsOfGoalCell[1].setPath();
 	}

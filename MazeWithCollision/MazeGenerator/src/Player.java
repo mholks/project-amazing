@@ -63,18 +63,18 @@ public class Player {
 
 	//check collision with horizontal walls
 		void collisionHorizontal(Wall wall){
-			if (wall.solid) {
+			if (wall.isSolid()) {
 				if(velocity.y>0){
-					if (position.y + radius >= wall.posY && position.y < wall.posY+ wall.wallHeight) {
-						if(position.x > wall.posX && position.x < wall.posX  + wall.wallWidth) {
-							position.y = wall.posY  + wall.wallHeight-radius;
+					if (position.y + radius >= wall.getPosY() && position.y < wall.getPosY()+ wall.getWallHeight()) {
+						if(position.x > wall.getPosX() && position.x < wall.getPosX()  + wall.getWallWidth()) {
+							position.y = wall.getPosY()  + wall.getWallHeight()-radius;
 						}
 					}
 				}
 				if(velocity.y<0){
-					if (position.y - radius >= wall.posY && position.y <= wall.posY  + wall.wallHeight + radius) {
-						if(position.x > wall.posX && position.x < wall.posX  + wall.wallWidth) {
-							position.y = wall.posY  + wall.wallHeight + radius+2;
+					if (position.y - radius >= wall.getPosY() && position.y <= wall.getPosY()  + wall.getWallHeight() + radius) {
+						if(position.x > wall.getPosX() && position.x < wall.getPosX()  + wall.getWallWidth()) {
+							position.y = wall.getPosY()  + wall.getWallHeight() + radius+2;
 						}
 					}
 				}
@@ -83,18 +83,18 @@ public class Player {
 		
 		//check collision with vertical walls
 		void collisionVertical(Wall wall) {
-			if (wall.solid) {
+			if (wall.isSolid()) {
 				if(velocity.x>0){
-					if (position.x + radius >= wall.posX && position.x < wall.posX + wall.wallWidth) {
-						if(position.y > wall.posY&& position.y < wall.posY  + wall.wallHeight) {
-							position.x = wall.posX  + wall.wallWidth-radius;
+					if (position.x + radius >= wall.getPosX() && position.x < wall.getPosX() + wall.getWallWidth()) {
+						if(position.y > wall.getPosY()&& position.y < wall.getPosY()  + wall.getWallHeight()) {
+							position.x = wall.getPosX()  + wall.getWallWidth()-radius;
 						}
 					}
 				}
 				if(velocity.x<0){
-					if (position.x - radius >= wall.posX  && position.x <= wall.posX  + wall.wallWidth + radius) {
-						if(position.y > wall.posY && position.y < wall.posY  + wall.wallHeight) {
-							position.x = wall.posX  + wall.wallWidth + radius+2;
+					if (position.x - radius >= wall.getPosX()  && position.x <= wall.getPosX()  + wall.getWallWidth() + radius) {
+						if(position.y > wall.getPosY() && position.y < wall.getPosY()  + wall.getWallHeight()) {
+							position.x = wall.getPosX()  + wall.getWallWidth() + radius+2;
 						}
 					}
 				}

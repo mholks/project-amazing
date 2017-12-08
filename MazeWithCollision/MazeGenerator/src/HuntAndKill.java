@@ -1,7 +1,8 @@
 	import java.util.ArrayList;
 	import java.util.concurrent.ThreadLocalRandom;
 
-	//implements hunt and kill strategy for maze creation
+	/** This class implements the Hunt and Kill algorithm for creating mazes 
+	  */
 	
 	public class HuntAndKill extends RecursiveStrategy { 
 		
@@ -36,7 +37,6 @@
 					for(Cell c : neighbourList){
 						if(c.getStatus()==true){
 							c.addConnection(mazeFields[i][j]);
-							mazeFields[i][j].addConnection(c);
 							
 							current=mazeFields[i][j];						
 							
@@ -46,10 +46,7 @@
 							//delete cell from unvisited
 							unvisitedCells.remove(current); 
 							
-							
 							break mainLoop;
-							
-							
 							}
 						}
 					}

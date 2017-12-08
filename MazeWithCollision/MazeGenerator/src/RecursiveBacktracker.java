@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
-//implements recursive backtracking strategy for maze creation
+/** This class implements the Recursive Backtracking algorithm for creating mazes 
+ */
 
 public class RecursiveBacktracker extends RecursiveStrategy { 
 	

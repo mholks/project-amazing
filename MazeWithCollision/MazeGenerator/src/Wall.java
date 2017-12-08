@@ -1,39 +1,61 @@
 import processing.core.PApplet;
 
 public class Wall {
-	int posX; // x index of the wall 
-	int posY; // y index
-	boolean solid; //wall solid or passage
-	PApplet parent;
-	int wallWidth; //width of wall
-	int wallHeight;//height of wall
-	int cellSize; //size of a cell
+	private int posX;
+	private int posY;
+	private boolean solid; //wall solid or passage
+	private PApplet parent;
+	private int wallWidth; //width of wall
+	private int wallHeight;//height of wall
 	
 	public Wall(int widthPos, int heightPos, PApplet p, boolean horizontal, int cellS){
-		solid=true; //wall is initialized as solid
+		solid=true; 
 		posX = widthPos; //position of wall is passed by constructor
 		posY= heightPos;
+		
 		parent = p;
+		
 		if(horizontal){
-		wallWidth = cellS; //width is passed by constructor
-		wallHeight = cellS/8; //height is passed by constructor
+		wallWidth = cellS; 
+		wallHeight = cellS/8; 
 		posY = posY - cellS/8;
 		}
+		
 		else{
-		wallWidth = cellS/8; //width is passed by constructor
-		wallHeight = cellS; //height is passed by constructor
+		wallWidth = cellS/8;
+		wallHeight = cellS;
 		posX=posX-cellS/8;
 		}
-		cellSize = cellS; //size of a cell passed by constructor
 	}
 	
 	public String toString(){
 		String s = "Wall: " + posX + " ," + posY;
 		return s;
 	}
+	
 	//sets a wall to be possible to walk through
 	public void setPath(){
 		solid = false;
+	}
+	
+	public boolean isSolid(){
+		return solid;
+	}
+	
+	public int getPosX(){
+		return posX;
+	}
+	
+	public int getPosY(){
+		return posY;
+	}
+	
+	public int getWallHeight(){
+		return wallHeight;
+	}
+	
+	public int getWallWidth(){
+		return wallWidth;
 	}
 	
 	public void printWall(){

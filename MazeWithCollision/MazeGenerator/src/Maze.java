@@ -40,7 +40,7 @@ public class Maze {
 	//fill Array with Cell-elements
 		for(int i=0; i<width; i++){
 			for(int j=0; j<height; j++){
-				mazeFields[i][j]= new Cell(i,j,parent,cellSize); //calls constructor of class Cell
+				mazeFields[i][j]= new Cell(i,j); //calls constructor of class Cell
 				
 				//connect cell with its walls
 				mazeFields[i][j].setWalls(horizontalWalls[i][j],
@@ -83,7 +83,7 @@ public class Maze {
 		//print all solid horizontal walls
 		for(int i = 0; i<horizontalWalls.length; i++){
 			for(int j = 0; j<horizontalWalls[0].length;j++)
-			if(horizontalWalls[i][j].solid){
+			if(horizontalWalls[i][j].isSolid()){
 				horizontalWalls[i][j].printWall();
 				}
 		}
@@ -91,7 +91,7 @@ public class Maze {
 		//print all solid vertical walls
 		for(int i = 0; i<verticalWalls.length; i++){
 			for(int j = 0; j<verticalWalls[0].length;j++)
-			if(verticalWalls[i][j].solid){
+			if(verticalWalls[i][j].isSolid()){
 				verticalWalls[i][j].printWall();
 				}
 		}
