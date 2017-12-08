@@ -30,18 +30,18 @@
 			for(int i = 0; i<mazeFields.length; i++){
 				for(int j = 0; j<mazeFields.length; j++){
 					
-					if(mazeFields[i][j].getStatus()==Status.UNVISITED){
+					if(mazeFields[i][j].getStatus()==false){
 						
 					ArrayList<Cell> neighbourList = mazeFields[i][j].getNeighbours();
 					for(Cell c : neighbourList){
-						if(c.getStatus()==Status.VISITED){
+						if(c.getStatus()==true){
 							c.addConnection(mazeFields[i][j]);
 							mazeFields[i][j].addConnection(c);
 							
 							current=mazeFields[i][j];						
 							
 							//set status of current cell to visited
-							current.setStatus(Status.VISITED); 
+							current.setVisited(true); 
 							
 							//delete cell from unvisited
 							unvisitedCells.remove(current); 

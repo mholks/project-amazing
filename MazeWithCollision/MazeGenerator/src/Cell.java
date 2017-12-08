@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import processing.core.PApplet;
 
 public class Cell {
-	private Status cellStatus; // enum consists of the two states: visited || unvisited
+	private boolean visited; // enum consists of the two states: visited || unvisited
 	private int widthPosition; // cell's width position in the grid
 	private int heightPosition; // cell's height position in the grid
 	private ArrayList<Cell> neighbours; //stores between two and four neighboring cells of the Cell
@@ -22,7 +22,7 @@ public class Cell {
 		heightPosition=height;
 		
 		//set cell's status to the default value of unvisited
-		cellStatus = Status.UNVISITED;
+		visited = false;
 		
 		parent = par;
 		
@@ -34,8 +34,8 @@ public class Cell {
 	}
 	
 	//setter-method for setting status of cell (visited/ unvisited)
-	public void setStatus(Status newstate){
-		cellStatus=newstate;
+	public void setVisited(boolean visited){
+		this.visited=visited;
 		
 		//DEBUG
 		//System.out.println("Set status of cell " + this.toString() + " to " + newstate);
@@ -43,8 +43,8 @@ public class Cell {
 		}
 	
 	//getter-method for reading status of cell
-	public Status getStatus(){
-		return cellStatus;
+	public boolean getStatus(){
+		return visited;
 	}
 	
 	//getter-method returning all neighbors of a cell

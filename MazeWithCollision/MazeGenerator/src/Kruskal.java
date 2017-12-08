@@ -22,13 +22,14 @@ public class Kruskal implements MazeCreator {
 				//create new set with cell in it
 				Set<Cell> cellSet = new HashSet<Cell>();
 				cellSet.add(mazeFields[i][j]);
+				
 				//by default setsOfCells contains every Cell in a separate set
 				setsOfCells.add(cellSet);
 				
-				//find the neighbours
+				//find the neighbours of the cell
 				for(Cell c : mazeFields[i][j].getNeighbours()){
 				
-				//add the edge to stack
+				//add the edge to stack if not yet added
 				Set<Cell> current = new HashSet<Cell>();
 				
 				current.add(mazeFields[i][j]);
@@ -106,11 +107,11 @@ public class Kruskal implements MazeCreator {
 				//debugging
 				//System.out.println("Connected cell " + contents[1].toString() + " and " + contents[0].toString());
 				
-				//remove the two seperate cells from setsOfCells
+				//remove the two separate cells from setsOfCells
 				setsOfCells.remove(secondSet);
 				setsOfCells.remove(firstSet);
 				
-				//add the combinedSet to setsOfCells
+				//add the combined set to setsOfCells
 				setsOfCells.add(combinedSet);
 				
 				//debugging

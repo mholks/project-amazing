@@ -26,7 +26,7 @@ public abstract class RecursiveStrategy implements MazeCreator {
 		Cell current = startingField; //some cell is set as the starting field
 
 		//set status of current cell to visited
-		current.setStatus(Status.VISITED); 
+		current.setVisited(true); 
 				
 		//delete cell from unvisited
 		unvisitedCells.remove(current); 
@@ -78,7 +78,7 @@ public abstract class RecursiveStrategy implements MazeCreator {
 		//System.out.println("I connected cell " + temp.toString() + " with cell " + current.toString());
 		
 		//set status of current cell to visited
-		current.setStatus(Status.VISITED); 
+		current.setVisited(true); 
 		
 		backTrackingStack.push(current);
 		
