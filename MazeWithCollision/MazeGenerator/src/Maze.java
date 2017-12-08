@@ -78,7 +78,7 @@ public class Maze {
 	
 	//creates output of maze on processing window
 	public void printMaze(){
-		parent.rect(0, 0, width*cellSize,height*cellSize);
+		parent.rect(0, 0, width*cellSize + 3,height*cellSize);
 		
 		//print all solid horizontal walls
 		for(int i = 0; i<horizontalWalls.length; i++){

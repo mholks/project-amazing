@@ -298,7 +298,7 @@ public class GameEngine extends PApplet {
     // if paused, show pause screen
     if (paused) {
       time = new ControlTimer();
-      rect(0, 0, 600, 600);
+      background(0);
       continueButton.setPosition(300, 300).setSize(60, 60);
     }
 
@@ -306,25 +306,19 @@ public class GameEngine extends PApplet {
 
       // when game is started
       if (started) {
-    	  
-    	
-    	
-        cp5.remove("Start"); // remove start button
+    	 cp5.remove("Start"); // remove start button
 
         // if goal is not reached yet
         if (!(goalReached)) {
           drawCountdown();
           drawStatistics();
+          
           pushMatrix();
       	  translate(displayWidth/4,0);
           fill(255, 255, 255);
           
           textSize(20);
           text(complexityClass, 500,500);
-
-          // show counting time in minutes and seconds
-          text(Math.round(time.time() / 1000 / 60 - timeOnPause)// minutes
-              + ":" + Math.round((time.time() / 1000) % 60 - timeOnPause), 500, 20);// seconds
 
         // spotlight on pause button
         /*  spotLight(255.0f, 255.0f, 255.0f, // color of the spotlight
@@ -351,14 +345,10 @@ public class GameEngine extends PApplet {
               500); // concentration of the light
 
           // display maze
-
           fill(255, 255, 255);
           stroke(255, 255, 255);
           maze.printMaze();
 
-          fill(0);
-          rect((endIndex1+1)*cellSize,endIndex2*cellSize,4,cellSize);
-          
           // print starting point
           fill(255, 0, 0);
           triangle(startingIndex1, // edge 1
