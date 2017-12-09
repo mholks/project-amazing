@@ -1,12 +1,6 @@
 import processing.core.*;
 import java.util.concurrent.ThreadLocalRandom;
 import controlP5.*;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 
 public class GameEngine extends PApplet {
 
@@ -14,7 +8,7 @@ public class GameEngine extends PApplet {
 
   private int size = 5; // size of maze in cells
   
-  private int gameSize = 200; //size of maze in pixel
+  private int gameSize = 450; //size of maze in pixel
 
   private int cellSize = gameSize / size; // size of one cell in pixel
 
@@ -57,7 +51,6 @@ public class GameEngine extends PApplet {
   
   // create a new maze and set player to its start
   public void initializeNewMaze(int complexity) {
-	gameSize = displayWidth/2;
     goalReached = false;
     // set time to zero
     time = new ControlTimer();
@@ -522,9 +515,11 @@ public class GameEngine extends PApplet {
 			  }
 		  }
 	  }*/
+	fill(255);
 	  highestLevel = complexityClass;
-	  text("Highest level achieved : " + highestLevel,displayWidth-displayWidth/5,displayHeight/4);	  
+	   
   }
+	  text("Highest level achieved : " + highestLevel,displayWidth-displayWidth/5,displayHeight/4);	
   
 	  /*
   public int getHighestLevel(){
