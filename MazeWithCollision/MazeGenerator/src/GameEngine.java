@@ -198,6 +198,7 @@ public class GameEngine extends PApplet {
     
     startingIndex1 = 0;
     startingIndex2 = ThreadLocalRandom.current().nextInt(0, maze.getHeight());
+    
     // set end point -> goal
     endIndex1 = size - 1;
     endIndex2 = ThreadLocalRandom.current().nextInt(0, maze.getHeight());
@@ -549,4 +550,5 @@ public class GameEngine extends PApplet {
 		  }
 	  }
   }*/
+  }
 }
