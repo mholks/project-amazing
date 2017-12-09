@@ -36,7 +36,7 @@ public class GameEngine extends PApplet {
   private Bang continueButton; // button to continue game
   private Bang pauseButton; // button to pause game
   private boolean paused = false; // is game paused
-  private Bang resetHighScore; //button to reset highscore
+ // private Bang resetHighScore; //button to reset highscore
 
   private int timeOnPause = 0; // how long was game paused
 
@@ -53,7 +53,7 @@ public class GameEngine extends PApplet {
   private int complexityClass = 12; //initial level
   
   //Level statistics
-  int highestLevel = -1;
+  int highestLevel = complexityClass;
   
   // create a new maze and set player to its start
   public void initializeNewMaze(int complexity) {
@@ -233,11 +233,11 @@ public class GameEngine extends PApplet {
     pauseButton = new Bang(cp5, "Pause");
     pauseButton.setPosition(-20, -20).setSize(5, 5);
     popMatrix();
-    resetHighScore = new Bang (cp5, "Reset");
-    resetHighScore.setPosition(500, 500).setSize(60,60);
+   // resetHighScore = new Bang (cp5, "Reset");
+   // resetHighScore.setPosition(500, 500).setSize(60,60);
   }
 
-  public void Reset(){
+ /* public void Reset(){
 	  highestLevel = 0;
 	  File scoreFile = new File("highscore.dat");
 	  if(!scoreFile.exists()){
@@ -268,7 +268,7 @@ public class GameEngine extends PApplet {
 			  e.printStackTrace();
 		  }
 	  }
-  }
+  } */
   
   // process button click on start
   public void Start() {
@@ -347,10 +347,10 @@ public class GameEngine extends PApplet {
       if (started) {
     	cp5.remove("Start"); // remove start button
     	
-    	resetHighScore.setPosition(displayWidth-displayWidth/25, 500).setSize(60,60);
+    //	resetHighScore.setPosition(displayWidth-displayWidth/25, 500).setSize(60,60);
 
     	//initialize highscore
-    	highestLevel = getHighestLevel();
+    //	highestLevel = getHighestLevel();
     	
         // if goal is not reached yet
         if (!(goalReached)) {
@@ -490,7 +490,7 @@ public class GameEngine extends PApplet {
 	  if (currentLevel > highestLevel)
 	  {
 		  //user has reached new highest level
-		  highestLevel = currentLevel;
+		/*  highestLevel = currentLevel;
 		  File scoreFile = new File("highscore.dat");
 		  if(!scoreFile.exists()){
 			  try{
@@ -520,11 +520,12 @@ public class GameEngine extends PApplet {
 				  e.printStackTrace();
 			  }
 		  }
-	  }
-	  
+	  }*/
+	  highestLevel = complexityClass;
 	  text("Highest level achieved : " + highestLevel,displayWidth-displayWidth/5,displayHeight/4);	  
   }
   
+	  /*
   public int getHighestLevel(){
 	   FileReader readFile = null;
 	   BufferedReader reader = null;
@@ -547,5 +548,5 @@ public class GameEngine extends PApplet {
 			  e.printStackTrace();
 		  }
 	  }
-  }
+  }*/
 }
