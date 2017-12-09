@@ -1,6 +1,12 @@
 import processing.core.*;
 import java.util.concurrent.ThreadLocalRandom;
 import controlP5.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class GameEngine extends PApplet {
 
@@ -8,9 +14,9 @@ public class GameEngine extends PApplet {
 
   private int size = 5; // size of maze in cells
   
-  private int gameSize = 200;
+  private int gameSize = 200; //size of maze in pixel
 
-  private int cellSize = gameSize / size; // size of one cell
+  private int cellSize = gameSize / size; // size of one cell in pixel
 
   private MazeCreator creat = new RecursiveBacktracker(); // chosen maze creation
                           // strategy
@@ -22,7 +28,6 @@ public class GameEngine extends PApplet {
 
   private int allowedTimeForLevel = 20;
   
-  
   private ControlP5 cp5; // library for buttons and timer
 
   private Bang startButton; // button to start game
@@ -31,6 +36,7 @@ public class GameEngine extends PApplet {
   private Bang continueButton; // button to continue game
   private Bang pauseButton; // button to pause game
   private boolean paused = false; // is game paused
+  private Bang resetHighScore; //button to reset highscore
 
   private int timeOnPause = 0; // how long was game paused
 
@@ -44,10 +50,10 @@ public class GameEngine extends PApplet {
   private int endIndex1 = size - 1;
   private int endIndex2 = ThreadLocalRandom.current().nextInt(0, maze.getHeight());
 
-  private int complexityClass = 12;
+  private int complexityClass = 12; //initial level
   
   //Level statistics
-  int highestLevel = complexityClass;
+  int highestLevel = -1;
   
   // create a new maze and set player to its start
   public void initializeNewMaze(int complexity) {
@@ -55,7 +61,6 @@ public class GameEngine extends PApplet {
     goalReached = false;
     // set time to zero
     time = new ControlTimer();
-    
     
     if (complexity == 1){
       creat = new Kruskal();// set strategy for maze creation
@@ -226,10 +231,45 @@ public class GameEngine extends PApplet {
     continueButton = new Bang(cp5, "Continue");
     continueButton.setPosition(-20, -20).setSize(5, 5);
     pauseButton = new Bang(cp5, "Pause");
-    pauseButton.setPosition(-10, -10).setSize(5, 5);
+    pauseButton.setPosition(-20, -20).setSize(5, 5);
     popMatrix();
+    resetHighScore = new Bang (cp5, "Reset");
+    resetHighScore.setPosition(500, 500).setSize(60,60);
   }
 
+  public void Reset(){
+	  highestLevel = 0;
+	  File scoreFile = new File("highscore.dat");
+	  if(!scoreFile.exists()){
+		  try{
+		  scoreFile.createNewFile();}
+		  catch(IOException e){
+			  e.printStackTrace();
+		  }
+	  }
+	  
+	  FileWriter writeFile = null;
+	  BufferedWriter writer = null;
+	  try{
+		  writeFile = new FileWriter(scoreFile,false);
+		  writer = new BufferedWriter(writeFile);
+		  writer.write(highestLevel);
+	  }
+	  catch (Exception e){
+		  
+	  }
+	  finally {
+		  try{
+		  if(writer!=null){
+			  writer.close();
+		  }
+		  }
+		  catch (Exception e){
+			  e.printStackTrace();
+		  }
+	  }
+  }
+  
   // process button click on start
   public void Start() {
     started = true;
@@ -305,8 +345,13 @@ public class GameEngine extends PApplet {
 
       // when game is started
       if (started) {
-    	 cp5.remove("Start"); // remove start button
+    	cp5.remove("Start"); // remove start button
+    	
+    	resetHighScore.setPosition(displayWidth-displayWidth/25, 500).setSize(60,60);
 
+    		//initialize highscore
+    		highestLevel = getHighestLevel();
+    	
         // if goal is not reached yet
         if (!(goalReached)) {
           drawCountdown();
@@ -444,10 +489,63 @@ public class GameEngine extends PApplet {
 	  
 	  if (currentLevel > highestLevel)
 	  {
+		  //user has reached new highest level
 		  highestLevel = currentLevel;
+		  File scoreFile = new File("highscore.dat");
+		  if(!scoreFile.exists()){
+			  try{
+			  scoreFile.createNewFile();}
+			  catch(IOException e){
+				  e.printStackTrace();
+			  }
+		  }
+		  
+		  FileWriter writeFile = null;
+		  BufferedWriter writer = null;
+		  try{
+			  writeFile = new FileWriter(scoreFile,false);
+			  writer = new BufferedWriter(writeFile);
+			  writer.write(highestLevel);
+		  }
+		  catch (Exception e){
+			  
+		  }
+		  finally {
+			  try{
+			  if(writer!=null){
+				  writer.close();
+			  }
+			  }
+			  catch (Exception e){
+				  e.printStackTrace();
+			  }
+		  }
 	  }
 	  
 	  text("Highest level achieved : " + highestLevel,displayWidth-displayWidth/5,displayHeight/4);	  
   }
   
+  public int getHighestLevel(){
+	   FileReader readFile = null;
+	   BufferedReader reader = null;
+	  try{
+		  readFile = new FileReader("highscore.dat");
+		  reader = new BufferedReader(readFile);
+		  String highscore = reader.readLine();
+		  return Integer.parseInt(highscore);
+		  
+	  }
+	  catch (Exception e){
+		  return complexityClass;
+	  }
+	  finally {
+		  try{
+			  if(!(reader==null)){
+				  reader.close();}
+		  }
+		  catch(IOException e){
+			  e.printStackTrace();
+		  }
+	  }
+  }
 }
