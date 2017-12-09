@@ -349,8 +349,8 @@ public class GameEngine extends PApplet {
     	
     	resetHighScore.setPosition(displayWidth-displayWidth/25, 500).setSize(60,60);
 
-    		//initialize highscore
-    		highestLevel = getHighestLevel();
+    	//initialize highscore
+    	highestLevel = getHighestLevel();
     	
         // if goal is not reached yet
         if (!(goalReached)) {
