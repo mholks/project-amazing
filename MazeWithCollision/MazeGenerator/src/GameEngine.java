@@ -8,7 +8,7 @@ public class GameEngine extends PApplet {
 
   private int size = 5; // size of maze in cells
   
-  private int gameSize = 450; //size of maze in pixel
+  private int gameSize = displayWidth/2; //size of maze in pixel
 
   private int cellSize = gameSize / size; // size of one cell in pixel
 
@@ -46,11 +46,13 @@ public class GameEngine extends PApplet {
 
   private int complexityClass = 12; //initial level
   
+  private ControlTimer pauseTimer;
   //Level statistics
   int highestLevel = complexityClass;
   
   // create a new maze and set player to its start
   public void initializeNewMaze(int complexity) {
+	 gameSize = displayWidth/2;
     goalReached = false;
     // set time to zero
     time = new ControlTimer();
@@ -221,12 +223,14 @@ public class GameEngine extends PApplet {
 	translate(displayWidth/4,0);
     cp5 = new ControlP5(this);
     startButton = new Bang(cp5, "Start");
-    startButton.setPosition(300, 300).setSize(60, 60);
+    startButton.setPosition(displayWidth/2, 2*displayHeight/3).setSize(displayWidth/12, displayHeight/12);
     continueButton = new Bang(cp5, "Continue");
-    continueButton.setPosition(-20, -20).setSize(5, 5);
+    continueButton.setPosition(-100, -100).setSize(5, 5);
     pauseButton = new Bang(cp5, "Pause");
     pauseButton.setPosition(-20, -20).setSize(5, 5);
     popMatrix();
+    p = new Player(this, cellSize);
+    p.setStartPosition(200, 200);
    // resetHighScore = new Bang (cp5, "Reset");
    // resetHighScore.setPosition(500, 500).setSize(60,60);
   }
@@ -275,9 +279,11 @@ public class GameEngine extends PApplet {
   // process button click on pause
   public void Pause() {
     paused = true;
-    
-    pauseButton.setPosition(-10, -10).setSize(5, 5);
+    pauseTimer = new ControlTimer();
+    pauseButton.setPosition(-100, -100).setSize(5, 5);
     continueButton.setPosition(200, 200).setSize(5, 5);
+    fill(0);
+
   }
 
   // process button click on continue
@@ -285,7 +291,6 @@ public class GameEngine extends PApplet {
     paused = false;
     continueButton.setPosition(-20, -20).setSize(5, 5);
     //reset time to zero (only for testing)
-    time = new ControlTimer();
   }
 
   // process key press to move player
@@ -327,18 +332,29 @@ public class GameEngine extends PApplet {
   public void draw() {
     fill(0);
     background(255);
+    textSize(36);
+
 
     // if paused, show pause screen
     if (paused) {
-      time = new ControlTimer();
       background(0);
       continueButton.setPosition(300, 300).setSize(60, 60);
+      controlsText();      
+      timeOnPause = Math.round((pauseTimer.time() / 1000));
     }
 
-    else {
-
+    else{
+    if(!started){
+    	 background(0);
+         startButton.setPosition(displayWidth/2, 2*displayHeight/3).setSize(60, 60);
+         controlsText();
+    }
+    	 
       // when game is started
       if (started) {
+    	  fill(0);
+     	 background(255);
+     	 textSize(36);
     	cp5.remove("Start"); // remove start button
     	
     //	resetHighScore.setPosition(displayWidth-displayWidth/25, 500).setSize(60,60);
@@ -368,7 +384,7 @@ public class GameEngine extends PApplet {
               600); // concentration of the light 
 
           // view pause button*/
-          pauseButton.setPosition(250, 540).setSize(60, 40);
+          pauseButton.setPosition(displayWidth/16, displayHeight/2).setSize(displayWidth/10, displayHeight/12);
 
           // spotlight following player
           spotLight(255.0f, 255.0f, 255.0f, // color of the spotlight
@@ -380,7 +396,7 @@ public class GameEngine extends PApplet {
                                 // position)
               0, 0, -1, // direction in which the light point
               PI / 2, // angle of the light
-              500); // concentration of the light
+              gameSize/3); // concentration of the light
 
           // display maze
           fill(255, 255, 255);
@@ -430,9 +446,9 @@ public class GameEngine extends PApplet {
         // if goal is reached, initialize new maze
         else {
           
-          int neededTime = Math.round((time.time() / 1000)); // time player needed
+          int neededTime = Math.round((time.time() / 1000)) - timeOnPause; // time player needed
                                     // to finish level
-          
+          timeOnPause = 0;
           System.out.println("Completed level: "
           + complexityClass + " in "
         		  + neededTime +
@@ -450,21 +466,22 @@ public class GameEngine extends PApplet {
         }
       }
     }
-  }
+    }
+  
   
   public void drawCountdown(){
 	//time needed for level in seconds start from zero
-	  int levelTimer = Math.round((time.time() / 1000) % 60 - timeOnPause); 
-	  
-		int heightBarTimer = displayWidth; //height of timer rectangle
-		int stepSize = heightBarTimer/allowedTimeForLevel; //decreasing rectangle for this amount
-		int timer = stepSize*levelTimer;
+	  int neededTime = Math.round((time.time() / 1000)%60  - timeOnPause); 
+  
+		int barTimerWidth = displayWidth; //width of timer rectangle
+		int stepSize = barTimerWidth/allowedTimeForLevel; //decreasing rectangle for this amount
+		int timer = stepSize*neededTime;
 
-		if (levelTimer < allowedTimeForLevel)
+		if (neededTime < allowedTimeForLevel)
 		{
 		
 		fill(0,255,0);
-		rect(0+timer/2,displayHeight-displayHeight/20,(displayWidth)-(timer),displayHeight/25);
+		rect(0+timer/2,displayHeight-displayHeight/11,(displayWidth)-(timer),displayHeight/18);
 		fill(0);
 		
 		}
@@ -472,78 +489,90 @@ public class GameEngine extends PApplet {
 		{
 			fill(255,0,0);
 		}
-		text(allowedTimeForLevel-levelTimer,displayWidth/2,displayHeight-displayHeight/20);
+		text(allowedTimeForLevel-neededTime,displayWidth/2,displayHeight-displayHeight/20);
   }
   
   public void drawStatistics()
   {
+	  textAlign(LEFT);
 	  int currentLevel = complexityClass;
-	  textSize(24);
+	  textSize(displayWidth/70);
 	  text("Current level: " + currentLevel, displayWidth-displayWidth/5,displayHeight/3);
 	  
 	  if (currentLevel > highestLevel)
 	  {
-		  //user has reached new highest level
-		/*  highestLevel = currentLevel;
-		  File scoreFile = new File("highscore.dat");
-		  if(!scoreFile.exists()){
-			  try{
-			  scoreFile.createNewFile();}
-			  catch(IOException e){
-				  e.printStackTrace();
-			  }
-		  }
-		  
-		  FileWriter writeFile = null;
-		  BufferedWriter writer = null;
-		  try{
-			  writeFile = new FileWriter(scoreFile,false);
-			  writer = new BufferedWriter(writeFile);
-			  writer.write(highestLevel);
-		  }
-		  catch (Exception e){
-			  
-		  }
-		  finally {
-			  try{
-			  if(writer!=null){
-				  writer.close();
-			  }
-			  }
-			  catch (Exception e){
-				  e.printStackTrace();
-			  }
-		  }
-	  }*/
+
 	fill(255);
 	  highestLevel = complexityClass;
 	   
   }
-	  text("Highest level achieved : " + highestLevel,displayWidth-displayWidth/5,displayHeight/4);	
+	  text("Highest level achieved : " + highestLevel,displayWidth-displayWidth/5,displayHeight/4);
+	  text("For controls and info, \n press pause!", displayWidth/52,displayHeight/3);
   
-	  /*
-  public int getHighestLevel(){
-	   FileReader readFile = null;
-	   BufferedReader reader = null;
-	  try{
-		  readFile = new FileReader("highscore.dat");
-		  reader = new BufferedReader(readFile);
-		  String highscore = reader.readLine();
-		  return Integer.parseInt(highscore);
+	  //Draw each tier for every complexity level
+	  if (complexityClass <= 5)
+	  {
 		  
+		  text("You are in wood-league!",displayWidth-displayWidth/5,displayHeight-displayHeight/3);
+		  fill(40,16,2);
+		  ellipse(displayWidth-displayWidth/8,displayHeight-displayHeight/4, gameSize/16,gameSize/16);  
 	  }
-	  catch (Exception e){
-		  return complexityClass;
+	  else if (complexityClass <= 10)
+	  {
+		  
+		  text("You are in Bronze-league!",displayWidth-displayWidth/5,displayHeight-displayHeight/3);
+		  fill(160,78,30);
+		  ellipse(displayWidth-displayWidth/8,displayHeight-displayHeight/4, gameSize/16,gameSize/16);  
 	  }
-	  finally {
-		  try{
-			  if(!(reader==null)){
-				  reader.close();}
-		  }
-		  catch(IOException e){
-			  e.printStackTrace();
-		  }
+	  else if (complexityClass <= 15)
+	  {
+		  
+		  text("You are in Silver-league!",displayWidth-displayWidth/5,displayHeight-displayHeight/3);
+		  fill(234,231,229);
+		  ellipse(displayWidth-displayWidth/8,displayHeight-displayHeight/4, gameSize/16,gameSize/16);  
 	  }
-  }*/
+	  else if (complexityClass <= 20)
+	  {
+		  
+		  text("You are in Gold-league!",displayWidth-displayWidth/5,displayHeight-displayHeight/3);
+		  fill(252,156,2);
+		  ellipse(displayWidth-displayWidth/8,displayHeight-displayHeight/4, gameSize/16,gameSize/16);  
+	  }
+	  else if (complexityClass <= 25)
+	  {
+		  text("You are in Platinum-league!",displayWidth-displayWidth/5,displayHeight-displayHeight/3);
+		  fill(28,119,110);
+		  ellipse(displayWidth-displayWidth/8,displayHeight-displayHeight/4, gameSize/16,gameSize/16); 
+
+	  }
+	  else if (complexityClass <= 30)
+	  {
+		  text("You are in Diamond-league!",displayWidth-displayWidth/5,displayHeight-displayHeight/3);
+		  fill(68,160,226);
+		  ellipse(displayWidth-displayWidth/8,displayHeight-displayHeight/4, gameSize/16,gameSize/16);  
+	  }
+	  else if (complexityClass <= 35)
+	  {
+		  
+		  text("You are in AMAZEING-league!",displayWidth-displayWidth/5,displayHeight-displayHeight/3);
+		  fill(255,0,0);
+		  ellipse(displayWidth-displayWidth/8,displayHeight-displayHeight/4, gameSize/16,gameSize/16);  
+	  }
+  }
+  
+  public void controlsText()
+  {
+	  fill(255);
+	  textSize(24);
+	  textAlign(CENTER);
+	  text("--aMAZEing-- \n \n Welcome to aMAZEing \n \n "
+	  		+ "Control the player using either: \n "
+	  		+ "'W' 'A' 'S' 'D' - Keys or ARROW - Keys \n \n"
+	  		+ "You must find the exit before the time runs out! \n"
+	  		+ "If you make it in time, you go up a level. \n If not, you go down a level."
+	  		+ "The corners will light up some of the map, \n to give you an idea of where to go. \n"
+	  		+ "Good luck!", (displayWidth/2),displayHeight/12);	  
   }
 }
+
+
