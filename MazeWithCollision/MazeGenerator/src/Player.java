@@ -102,12 +102,10 @@ public class Player {
 		}
 	
 	//check whether player escaped the maze
-	public boolean goalReached(int size){
-		
+	public boolean goalReached(int size){		
 		if(position.x>size+10|| position.y>size+10){
 			parent.fill(0,255,0);
-			parent.rect(0,0,200,200);
-			
+			parent.rect(0,0,200,200);		
 			return true;
 		}
 		else{
