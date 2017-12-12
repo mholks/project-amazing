@@ -396,7 +396,7 @@ public class GameEngine extends PApplet {
                                 // position)
               0, 0, -1, // direction in which the light point
               PI / 2, // angle of the light
-              gameSize/4); // concentration of the light
+              gameSize/3); // concentration of the light
 
           // display maze
           fill(255, 255, 255);
