@@ -412,9 +412,9 @@ public class GameEngine extends PApplet {
 
           // print end point
           fill(0, 255, 0);
-          triangle(endIndex1 * cellSize + 4, endIndex2 * cellSize, endIndex1 * cellSize + 4,
+          triangle(endIndex1 * cellSize + 4,
+        	  endIndex2 * cellSize, endIndex1 * cellSize + 4,
               endIndex2 * cellSize + cellSize - 2,
-
               endIndex1 * cellSize + cellSize - 5, endIndex2 * cellSize + cellSize / 2);
         
           // check for collision with horizontal walls

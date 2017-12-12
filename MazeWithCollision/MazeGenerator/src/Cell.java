@@ -27,8 +27,6 @@ public class Cell {
 		//empty ArrayList for storing neighbors is initialized
 		neighbours = new ArrayList<Cell>();
 		
-		//empty ArrayList for storing connected cells is initialized
-		//connectedCells = new ArrayList<Cell>();
 	}
 	
 	//setter-method for setting status of cell (visited/ unvisited)
